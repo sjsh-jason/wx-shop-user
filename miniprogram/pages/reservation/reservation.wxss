@@ -1,0 +1,119 @@
+.page-container {
+  min-height: 100vh;
+  background: #F8F9FA;
+}
+
+.tabs {
+  display: flex;
+  background: #ffffff;
+  padding: 0 60rpx;
+  border-bottom: 2rpx solid #F0F0F0;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 32rpx 0;
+  font-size: 28rpx;
+  color: #666666;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #FF6B00;
+  font-weight: bold;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64rpx;
+  height: 6rpx;
+  background: #FF6B00;
+  border-radius: 3rpx;
+}
+
+.list-container {
+  padding: 30rpx;
+}
+
+.reservation-card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+}
+
+.product-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.status-tag {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.card-content {
+  display: flex;
+  gap: 24rpx;
+}
+
+.product-image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  background: #F5F5F5;
+  flex-shrink: 0;
+}
+
+.info-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.price {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FF6B00;
+}
+
+.original-price {
+  font-size: 24rpx;
+  color: #999999;
+  text-decoration: line-through;
+  margin-left: 12rpx;
+}
+
+.time-text {
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 120rpx 0;
+  color: #999999;
+  font-size: 28rpx;
+}

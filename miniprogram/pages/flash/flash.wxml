@@ -1,0 +1,46 @@
+<view class="page-container">
+  <view class="flash-header">
+    <view class="header-content">
+      <text class="header-title">限时秒杀</text>
+      <view class="countdown">
+        <text class="countdown-label">距离本场结束</text>
+        <view class="countdown-box">
+          <text class="countdown-num">{{hours}}</text>
+          <text class="countdown-colon">:</text>
+          <text class="countdown-num">{{minutes}}</text>
+          <text class="countdown-colon">:</text>
+          <text class="countdown-num">{{seconds}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="product-list">
+    <view class="product-card" wx:for="{{products}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="product-image">
+        <image src="{{item.image || '/images/placeholder.png'}}" mode="aspectFill" class="image"></image>
+      </view>
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-desc">每日限量{{item.stock}}份，先到先得</view>
+        <view class="product-bottom">
+          <view class="price-section">
+            <text class="price-current">¥{{item.promotionPrice}}</text>
+            <text class="price-original">¥{{item.originalPrice}}</text>
+          </view>
+          <view class="progress-section">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{getProgress(item)}}%"></view>
+            </view>
+            <text class="progress-text">已抢{{getProgress(item)}}%</text>
+          </view>
+          <button class="buy-btn" bindtap="buyNow" data-id="{{item.id}}" catchtap="true">立即抢购</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-tip" wx:if="{{products.length === 0 && !loading}}">
+    <text>暂无促销商品</text>
+  </view>
+</view>

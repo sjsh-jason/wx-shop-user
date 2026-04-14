@@ -1,0 +1,50 @@
+<view class="page-container">
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="index"
+      class="tab-item {{currentTab === index ? 'active' : ''}}"
+      data-index="{{index}}"
+      bindtap="switchTab"
+    >
+      {{item.name}}
+    </view>
+  </view>
+
+  <view class="list-container" wx:if="{{!loading}}">
+    <view wx:if="{{list.length > 0}}">
+      <view
+        wx:for="{{list}}"
+        wx:key="id"
+        class="exchange-card"
+        data-id="{{item.id}}"
+        bindtap="goToDetail"
+      >
+        <image class="product-image" src="{{item.productImage}}" mode="aspectFill" wx:if="{{item.productImage}}"></image>
+        <view class="image-placeholder" wx:else>
+          <icon type="waiting" size="40" color="#FF6B00"></icon>
+        </view>
+        <view class="info">
+          <text class="product-name">{{item.productName}}</text>
+          <view class="meta">
+            <text class="points">
+              <icon type="waiting" size="12" color="#FCD34D"></icon>
+              {{item.points}}积分
+            </text>
+            <text class="time">{{item.timeText}}</text>
+          </view>
+          <view class="status status-{{item.status}}">{{item.statusText}}</view>
+        </view>
+        <icon type="info" size="16" color="#ccc" class="arrow"></icon>
+      </view>
+    </view>
+    <view wx:else class="empty">
+      <icon type="waiting" size="64" color="#ddd"></icon>
+      <text class="empty-text">暂无兑换记录</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

@@ -1,0 +1,192 @@
+.page-container {
+  min-height: 100vh;
+  background: #F8F9FA;
+}
+
+.header-section {
+  background: #ffffff;
+  padding: 80rpx 48rpx 48rpx;
+  border-bottom-left-radius: 80rpx;
+  border-bottom-right-radius: 80rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 48rpx;
+}
+
+.avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 64rpx;
+  background: #F5F5F5;
+  border: 8rpx solid #FFF0E6;
+  margin-right: 32rpx;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.nickname {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-right: 16rpx;
+}
+
+.level-badge {
+  background: #FEF3C7;
+  color: #B45309;
+  font-size: 20rpx;
+  font-weight: bold;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.user-id {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.settings-btn {
+  width: 64rpx;
+  height: 64rpx;
+  background: #F5F5F5;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.divider {
+  width: 2rpx;
+  height: 48rpx;
+  background: #F0F0F0;
+}
+
+.menu-section {
+  margin: 48rpx 30rpx;
+  background: #ffffff;
+  border-radius: 32rpx;
+  overflow: hidden;
+  border: 2rpx solid #F5F5F5;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.02);
+}
+
+.menu-header {
+  padding: 32rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+}
+
+.menu-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.menu-list {
+  padding: 16rpx 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 32rpx;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.icon-orange {
+  background: #FFF0E6;
+  color: #FF6B00;
+}
+
+.icon-pink {
+  background: #FFE6F0;
+  color: #EC4899;
+}
+
+.icon-blue {
+  background: #E0F2FE;
+  color: #3B82F6;
+}
+
+.icon-green {
+  background: #D1FAE5;
+  color: #10B981;
+}
+
+.icon-purple {
+  background: #EDE9FE;
+  color: #8B5CF6;
+}
+
+.icon-red {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
+.icon-merchant {
+  background: #FFF0E6;
+  color: #FF6B00;
+}
+
+.menu-text {
+  font-size: 28rpx;
+  color: #4B5563;
+}
+
+.mt-4 {
+  margin-top: 32rpx;
+}

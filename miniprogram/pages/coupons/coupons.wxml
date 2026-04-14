@@ -1,0 +1,32 @@
+<view class="page-container">
+  <view class="coupon-header">
+    <view class="header-content">
+      <view class="header-icon">
+        <icon type="waiting" size="32" color="#ffffff"></icon>
+      </view>
+      <view>
+        <text class="header-title">领券中心</text>
+        <text class="header-desc">每日 10:00 准时开抢好券</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="coupon-list">
+    <view class="coupon-item">
+      <view class="coupon-left">
+        <text class="coupon-symbol">¥</text>
+        <text class="coupon-value">20</text>
+      </view>
+      <view class="coupon-right">
+        <view class="coupon-info">
+          <text class="coupon-name">午间消费满100减20</text>
+          <text class="coupon-desc">全场通用，除酒水外</text>
+        </view>
+        <view class="coupon-bottom">
+          <text class="coupon-expire">有效期至 2026-04-15</text>
+          <view class="claim-btn">立即领取</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

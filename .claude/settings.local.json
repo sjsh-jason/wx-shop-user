@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(gsd-new-project)",
+      "Skill(gsd-explore)",
+      "Skill(gsd-plan-phase)",
+      "Skill(gsd-execute-phase)",
+      "Skill(gsd-progress)",
+      "Skill(gsd-next)",
+      "Bash(git:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "Framelink_Figma_MCP"
+  ]
+}

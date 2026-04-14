@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/profile/profile",
+    "pages/mall/mall",
+    "pages/coupons/coupons",
+    "pages/flash/flash",
+    "pages/reservation/reservation",
+    "pages/reservation-detail/reservation-detail",
+    "pages/scan/scan",
+    "pages/check-in/check-in",
+    "pages/points-log/points-log",
+    "pages/exchanged/exchanged",
+    "pages/exchanged-detail/exchanged-detail",
+    "pages/lucky-draw/lucky-draw",
+    "pages/prize-manage/prize-manage",
+    "pages/customer-list/customer-list"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "食悦会员中心",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f8f9fa"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF6B00",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/mall/mall",
+        "text": "兑换",
+        "iconPath": "images/tab-gift.png",
+        "selectedIconPath": "images/tab-gift-active.png"
+      },
+      {
+        "pagePath": "pages/coupons/coupons",
+        "text": "卡券",
+        "iconPath": "images/tab-ticket.png",
+        "selectedIconPath": "images/tab-ticket-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-user.png",
+        "selectedIconPath": "images/tab-user-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

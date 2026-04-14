@@ -1,0 +1,150 @@
+<view class="page-container">
+  <view class="header-section">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo.avatar || '/images/avatar.png'}}" mode="aspectFill"></image>
+      <view class="info">
+        <view class="name-row">
+          <text class="nickname">{{userInfo.nickname || '微信用户'}}</text>
+          <view class="level-badge">黄金会员</view>
+        </view>
+        <text class="user-id">ID: {{userInfo.id || '-'}}</text>
+      </view>
+      <view class="settings-btn">
+        <icon type="info" size="20" color="#999"></icon>
+      </view>
+    </view>
+
+    <view class="stats-row">
+      <view class="stat-item" bindtap="goToPointsLog">
+        <text class="stat-value">{{userInfo.points || 0}}</text>
+        <text class="stat-label">我的积分</text>
+      </view>
+      <view class="divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">6</text>
+        <text class="stat-label">优惠券</text>
+      </view>
+      <view class="divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">¥156</text>
+        <text class="stat-label">钱包余额</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-section" wx:if="{{isMerchant}}">
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToScan">
+        <view class="menu-left">
+          <view class="menu-icon icon-merchant">
+            <icon type="success" size="20"></icon>
+          </view>
+          <text class="menu-text">商家核销</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-header">
+      <text class="menu-title">会员服务</text>
+    </view>
+
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToCheckIn">
+        <view class="menu-left">
+          <view class="menu-icon icon-orange">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">每日签到</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="goToLuckyDraw">
+        <view class="menu-left">
+          <view class="menu-icon icon-yellow">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">幸运抽奖</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="goToExchanged">
+        <view class="menu-left">
+          <view class="menu-icon icon-orange">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">积分兑换记录</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="goToPointsLog">
+        <view class="menu-left">
+          <view class="menu-icon icon-blue">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">积分明细</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item">
+        <view class="menu-left">
+          <view class="menu-icon icon-pink">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">我的拼团记录</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item">
+        <view class="menu-left">
+          <view class="menu-icon icon-blue">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">我的评价</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item">
+        <view class="menu-left">
+          <view class="menu-icon icon-green">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">收货地址</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-section mt-4">
+    <view class="menu-list">
+      <view class="menu-item">
+        <view class="menu-left">
+          <view class="menu-icon icon-purple">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">隐私与协议</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item">
+        <view class="menu-left">
+          <view class="menu-icon icon-red">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">联系在线客服</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,27 @@
+<view class="scan-container">
+  <view class="scan-header">
+    <view class="scan-icon">
+      <icon type="success" size="64" color="#FF6B00"></icon>
+    </view>
+    <text class="scan-title">扫码核销</text>
+    <text class="scan-desc">扫描顾客预约二维码完成核销</text>
+  </view>
+
+  <view class="scan-actions">
+    <button class="scan-btn" bindtap="handleScan" disabled="{{verifying}}">
+      <text class="btn-text">{{verifying ? '核销中...' : '扫一扫'}}</text>
+    </button>
+    <button class="manual-btn" bindtap="handleManualInput" disabled="{{verifying}}">
+      <text class="btn-text">手动输入核销码</text>
+    </button>
+  </view>
+
+  <view class="scan-tips">
+    <view class="tip-title">核销须知</view>
+    <view class="tip-list">
+      <text class="tip-item">1. 请确认顾客已到店消费后再进行核销</text>
+      <text class="tip-item">2. 每个二维码仅可核销一次，请谨慎操作</text>
+      <text class="tip-item">3. 如遇扫码失败，可尝试手动输入核销码</text>
+    </view>
+  </view>
+</view>

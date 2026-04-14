@@ -1,0 +1,85 @@
+.page-container {
+  min-height: 100vh;
+  background: #F8F9FA;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 160rpx;
+}
+
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #999999;
+}
+
+.log-list {
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-type {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.log-remark {
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 8rpx;
+}
+
+.log-time {
+  font-size: 22rpx;
+  color: #CCCCCC;
+}
+
+.log-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.log-points {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.log-points.income {
+  color: #10B981;
+}
+
+.log-points.expense {
+  color: #EF4444;
+}
+
+.log-balance {
+  font-size: 22rpx;
+  color: #999999;
+}

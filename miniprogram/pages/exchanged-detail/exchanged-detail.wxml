@@ -1,0 +1,51 @@
+<view class="page-container" wx:if="{{detail}}">
+  <view class="product-card">
+    <image class="product-image" src="{{detail.productImage}}" mode="aspectFill" wx:if="{{detail.productImage}}"></image>
+    <view class="product-placeholder" wx:else>
+      <icon type="waiting" size="60" color="#FF6B00"></icon>
+    </view>
+    <view class="product-info">
+      <text class="product-name">{{detail.productName}}</text>
+      <view class="points-info">
+        <icon type="waiting" size="16" color="#FCD34D"></icon>
+        <text class="points-num">{{detail.points}}</text>
+        <text class="points-unit">积分</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="status-card">
+    <view class="status-item">
+      <text class="label">状态</text>
+      <text class="value status-{{detail.status}}">{{statusText}}</text>
+    </view>
+    <view class="status-item">
+      <text class="label">兑换时间</text>
+      <text class="value">{{createTimeText}}</text>
+    </view>
+    <view class="status-item" wx:if="{{detail.verifyTime}}">
+      <text class="label">领取时间</text>
+      <text class="value">{{verifyTimeText}}</text>
+    </view>
+  </view>
+
+  <view class="qrcode-section" wx:if="{{detail.status === 0}}">
+    <view class="qrcode-tip">请向商家出示此二维码</view>
+    <view class="qrcode-box">
+      <view class="qrcode-placeholder">
+        <icon type="waiting" size="80" color="#333"></icon>
+        <text class="qrcode-text">{{detail.qrCode}}</text>
+      </view>
+    </view>
+    <view class="qrcode-hint">核销码：{{detail.qrCode}}</view>
+  </view>
+
+  <view class="completed-section" wx:if="{{detail.status === 1}}">
+    <icon type="success" size="60" color="#07C160"></icon>
+    <text class="completed-text">已领取</text>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>

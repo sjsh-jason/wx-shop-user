@@ -1,0 +1,45 @@
+<view class="page-container" wx:if="{{reservation}}">
+  <view class="product-section">
+    <image src="{{reservation.productImage || '/images/placeholder.png'}}" mode="aspectFill" class="product-image"></image>
+    <view class="product-info">
+      <text class="product-name">{{reservation.productName}}</text>
+      <view class="price-row">
+        <text class="price">¥{{reservation.promotionPrice}}</text>
+        <text class="original-price">¥{{reservation.originalPrice}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="status-section">
+    <view class="status-badge" style="background: {{getStatusBg(reservation.status)}}">
+      <text style="color: {{getStatusColor(reservation.status)}}">{{getStatusText(reservation.status)}}</text>
+    </view>
+  </view>
+
+  <view class="qr-section" wx:if="{{reservation.status === 0}}">
+    <view class="qr-title">核销二维码</view>
+    <view class="qr-box">
+      <canvas canvas-id="qrCanvas" class="qr-canvas"></canvas>
+    </view>
+    <text class="qr-tip">请向商家出示此二维码进行核销</text>
+  </view>
+
+  <view class="info-section">
+    <view class="info-row">
+      <text class="info-label">预约单号</text>
+      <text class="info-value">{{reservation.id}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">预约时间</text>
+      <text class="info-value">{{formatTime(reservation.createTime)}}</text>
+    </view>
+    <view class="info-row" wx:if="{{reservation.verifyTime}}">
+      <text class="info-label">核销时间</text>
+      <text class="info-value">{{formatTime(reservation.verifyTime)}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-bar" wx:if="{{reservation.status === 0}}">
+    <button class="verify-btn" open-type="getUserInfo" bindgetuserinfo="goToScan">商家扫码核销</button>
+  </view>
+</view>

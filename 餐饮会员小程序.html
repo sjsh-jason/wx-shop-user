@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>食悦餐饮会员中心 - 2026</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/echarts.min.5.4.3.js"></script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .iphone-x {
+            width: 375px;
+            height: 812px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            border: 8px solid #333;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            background: #FDF4F2;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .coupon-cutout {
+            position: relative;
+        }
+        .coupon-cutout::before, .coupon-cutout::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            background-color: #FDF4F2;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .coupon-cutout::before { left: -8px; }
+        .coupon-cutout::after { right: -8px; }
+        
+        .lucky-grid-item.active {
+            background-color: #FF6B00;
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 107, 0, 0.6);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-200 py-10">
+<div class="iphone-x flex flex-col">
+<!-- 状态栏 -->
+<div class="h-11 w-full bg-white flex justify-between items-center px-8 z-50">
+<span class="text-sm font-bold">09:41</span>
+<div class="flex gap-1">
+<iconify-icon class="text-sm" icon="mdi:signal"></iconify-icon>
+<iconify-icon class="text-sm" icon="mdi:wifi"></iconify-icon>
+<iconify-icon class="text-sm rotate-180" icon="mdi:battery"></iconify-icon>
+</div>
+</div>
+<!-- 顶部导航栏 -->
+<div class="h-12 bg-white flex items-center justify-center relative border-b border-gray-100 z-50">
+<h1 class="text-lg font-bold text-gray-800" id="page-title">食悦会员中心</h1>
+</div>
+<!-- 页面内容容器 -->
+<div class="flex-1 overflow-y-auto hide-scrollbar pb-24" id="app-content">
+<!-- 首页 (TAB: home) -->
+<div class="page" id="page-home">
+<!-- 会员卡展示 -->
+<div class="px-4 mt-4">
+<div class="bg-gradient-to-br from-[#FF6B00] to-[#E63946] rounded-2xl p-5 text-white shadow-xl relative overflow-hidden">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="text-white/80 text-xs mb-1">当前会员等级</p>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold">黄金会员</span>
+<iconify-icon class="text-yellow-300 text-xl" icon="solar:crown-minimalistic-bold"></iconify-icon>
+</div>
+</div>
+<div class="bg-white/20 px-3 py-1 rounded-full text-xs backdrop-blur-md">
+                                V2 会员
+                            </div>
+</div>
+<div class="mb-2 flex justify-between text-xs">
+<span>成长值 1280/2000</span>
+<span>距铂金会员还差720</span>
+</div>
+<div class="w-full h-1.5 bg-black/10 rounded-full overflow-hidden mb-4">
+<div class="bg-yellow-300 h-full w-[64%] shadow-[0_0_8px_#FCD34D]"></div>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-white/20">
+<div class="text-center">
+<p class="text-xs text-white/70">可用积分</p>
+<p class="text-lg font-bold">4,280</p>
+</div>
+<div class="text-center">
+<p class="text-xs text-white/70">优惠券</p>
+<p class="text-lg font-bold">6</p>
+</div>
+<div class="text-center">
+<p class="text-xs text-white/70">钱包余额</p>
+<p class="text-lg font-bold">¥156.5</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 快捷入口 -->
+<div class="grid grid-cols-4 gap-4 px-4 mt-6">
+<button class="flex flex-col items-center gap-2" onclick="switchPage('mall')">
+<div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-[#FF6B00]">
+<iconify-icon icon="solar:shop-2-bold-duotone" width="28"></iconify-icon>
+</div>
+<span class="text-xs text-gray-600 font-medium">积分商城</span>
+</button>
+<button class="flex flex-col items-center gap-2" onclick="switchPage('flash')">
+<div class="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center text-[#E63946]">
+<iconify-icon icon="solar:bomb-bold-duotone" width="28"></iconify-icon>
+</div>
+<span class="text-xs text-gray-600 font-medium">限时秒杀</span>
+</button>
+<button class="flex flex-col items-center gap-2" onclick="switchPage('lucky')">
+<div class="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center text-[#FFB703]">
+<iconify-icon icon="solar:ghost-bold-duotone" width="28"></iconify-icon>
+</div>
+<span class="text-xs text-gray-600 font-medium">幸运抽奖</span>
+</button>
+<button class="flex flex-col items-center gap-2" onclick="switchPage('group')">
+<div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-500">
+<iconify-icon icon="solar:users-group-rounded-bold-duotone" width="28"></iconify-icon>
+</div>
+<span class="text-xs text-gray-600 font-medium">拼团返现</span>
+</button>
+</div>
+<!-- 营销Banner -->
+<div class="px-4 mt-6">
+<div class="relative rounded-2xl overflow-hidden h-32 shadow-sm">
+<img alt="Spring New Dishes" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/5efc97dcddbe44c7b9e7c65ac7a13c4b.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent flex flex-col justify-center px-6">
+<h3 class="text-white font-bold text-lg italic">2026春季上新</h3>
+<p class="text-white/90 text-xs">老客邀请新客，双双得50元券</p>
+</div>
+</div>
+</div>
+<!-- 热门推荐列表 -->
+<div class="mt-6 px-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold text-gray-800">热门促销活动</h3>
+<span class="text-xs text-gray-400">查看全部 &gt;</span>
+</div>
+<!-- 秒杀卡片 -->
+<div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 mb-4" onclick="switchPage('flash')">
+<div class="flex gap-3">
+<div class="w-24 h-24 rounded-lg overflow-hidden relative">
+<img alt="Braised Pork" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/b1eecb3c936844ae99c13e93a6f4ea24.jpg"/>
+<div class="absolute top-0 left-0 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-br-lg">秒杀</div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<h4 class="font-bold text-gray-800 line-clamp-1">秘制红烧肉 (大份)</h4>
+<p class="text-[10px] text-gray-400 mt-1 italic">精选五花肉，72道工序秘制</p>
+</div>
+<div class="flex items-end justify-between">
+<div>
+<span class="text-red-600 font-bold text-lg">¥9.9</span>
+<span class="text-xs text-gray-400 line-through ml-1">¥58</span>
+</div>
+<button class="bg-[#E63946] text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg shadow-red-200">立即抢购</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 拼团卡片 -->
+<div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100" onclick="switchPage('group')">
+<div class="flex gap-3">
+<div class="w-24 h-24 rounded-lg overflow-hidden relative">
+<img alt="Family Set" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/3089885174bb40bcadb40de9d75e9c8f.jpg"/>
+<div class="absolute top-0 left-0 bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-br-lg">拼团</div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<h4 class="font-bold text-gray-800 line-clamp-1">双人奢享套餐</h4>
+<p class="text-[10px] text-gray-400 mt-1 italic">3荤2素+招牌饮品</p>
+</div>
+<div class="flex items-end justify-between">
+<div>
+<span class="text-orange-600 font-bold text-lg">¥88</span>
+<span class="text-xs text-gray-400 ml-1">2人团</span>
+</div>
+<button class="bg-orange-500 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg shadow-orange-200">去拼团</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 积分商城 (TAB: mall) -->
+<div class="page hidden" id="page-mall">
+<div class="px-4 pt-4">
+<!-- 积分余额 -->
+<div class="bg-white rounded-xl p-4 shadow-sm flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<iconify-icon class="text-orange-500 text-2xl" icon="solar:ranking-bold"></iconify-icon>
+<div>
+<p class="text-xs text-gray-400">当前可用积分</p>
+<p class="text-xl font-bold text-orange-600">4,280</p>
+</div>
+</div>
+<button class="text-xs text-orange-500 font-medium">积分明细 &gt;</button>
+</div>
+<!-- 兑换分类 -->
+<div class="flex gap-6 mb-4 border-b border-gray-200 pb-2">
+<button class="text-orange-600 font-bold border-b-2 border-orange-600 pb-1">代金券</button>
+<button class="text-gray-400 font-medium pb-1">菜品兑换</button>
+<button class="text-gray-400 font-medium pb-1">周边礼品</button>
+</div>
+<!-- 商品列表 -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+<div class="h-32 relative">
+<img alt="Coupon 10" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/7e89336a9105441c872999665fb89c80.jpg"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center font-bold text-white text-2xl">¥10</div>
+</div>
+<div class="p-3">
+<h4 class="text-sm font-bold text-gray-800">全场通用10元券</h4>
+<div class="flex items-center gap-1 mt-1 mb-3">
+<iconify-icon class="text-yellow-400 text-xs" icon="solar:star-bold"></iconify-icon>
+<span class="text-orange-600 font-bold">500</span>
+<span class="text-[10px] text-gray-400">积分</span>
+</div>
+<button class="w-full py-1.5 bg-orange-100 text-orange-600 rounded-full text-xs font-bold">立即兑换</button>
+</div>
+</div>
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+<div class="h-32 relative">
+<img alt="Coupon 30" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/381894de16984a4ab9b0b7010d0e42da.jpg"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center font-bold text-white text-2xl">¥30</div>
+</div>
+<div class="p-3">
+<h4 class="text-sm font-bold text-gray-800">满100减30券</h4>
+<div class="flex items-center gap-1 mt-1 mb-3">
+<iconify-icon class="text-yellow-400 text-xs" icon="solar:star-bold"></iconify-icon>
+<span class="text-orange-600 font-bold">1200</span>
+<span class="text-[10px] text-gray-400">积分</span>
+</div>
+<button class="w-full py-1.5 bg-orange-100 text-orange-600 rounded-full text-xs font-bold">立即兑换</button>
+</div>
+</div>
+<!-- 更多商品示例 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+<div class="h-32 relative">
+<img alt="Drink" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/6b43d80ad7fb49cd864847cf8b771a96.jpg"/>
+</div>
+<div class="p-3">
+<h4 class="text-sm font-bold text-gray-800">招牌冻柠茶</h4>
+<div class="flex items-center gap-1 mt-1 mb-3">
+<iconify-icon class="text-yellow-400 text-xs" icon="solar:star-bold"></iconify-icon>
+<span class="text-orange-600 font-bold">800</span>
+<span class="text-[10px] text-gray-400">积分</span>
+</div>
+<button class="w-full py-1.5 bg-orange-100 text-orange-600 rounded-full text-xs font-bold">立即兑换</button>
+</div>
+</div>
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+<div class="h-32 relative">
+<img alt="Snack" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/c21ba9f5c0dc457b93b8ebf245f5f859.jpg"/>
+</div>
+<div class="p-3">
+<h4 class="text-sm font-bold text-gray-800">脆皮炸鸡翅</h4>
+<div class="flex items-center gap-1 mt-1 mb-3">
+<iconify-icon class="text-yellow-400 text-xs" icon="solar:star-bold"></iconify-icon>
+<span class="text-orange-600 font-bold">1500</span>
+<span class="text-[10px] text-gray-400">积分</span>
+</div>
+<button class="w-full py-1.5 bg-orange-100 text-orange-600 rounded-full text-xs font-bold">立即兑换</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 优惠券中心 (TAB: coupons) -->
+<div class="page hidden" id="page-coupons">
+<div class="px-4 pt-4">
+<div class="bg-[#FF6B00]/10 rounded-xl p-4 flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white">
+<iconify-icon icon="solar:ticket-bold" width="24"></iconify-icon>
+</div>
+<div>
+<h3 class="font-bold text-orange-800">领券中心</h3>
+<p class="text-[10px] text-orange-600">每日 10:00 准时开抢好券</p>
+</div>
+</div>
+</div>
+<!-- 优惠券列表 -->
+<div class="space-y-4">
+<!-- 满减券 -->
+<div class="bg-white rounded-xl overflow-hidden flex shadow-sm border border-orange-100 coupon-cutout">
+<div class="w-24 bg-gradient-to-b from-orange-400 to-orange-500 flex flex-col items-center justify-center text-white p-2">
+<span class="text-xs">¥</span>
+<span class="text-3xl font-bold">20</span>
+</div>
+<div class="flex-1 p-3 flex flex-col justify-between">
+<div>
+<h4 class="text-sm font-bold text-gray-800">午间消费满100减20</h4>
+<p class="text-[10px] text-gray-400 mt-1">全场通用，除酒水外</p>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[9px] text-gray-300">有效期至 2026-04-15</span>
+<button class="bg-orange-500 text-white text-[10px] px-3 py-1 rounded-full">立即领取</button>
+</div>
+</div>
+</div>
+<!-- 折扣券 -->
+<div class="bg-white rounded-xl overflow-hidden flex shadow-sm border border-red-100 coupon-cutout">
+<div class="w-24 bg-gradient-to-b from-red-400 to-red-500 flex flex-col items-center justify-center text-white p-2">
+<span class="text-3xl font-bold">8.8</span>
+<span class="text-xs">折</span>
+</div>
+<div class="flex-1 p-3 flex flex-col justify-between">
+<div>
+<h4 class="text-sm font-bold text-gray-800">周末会员尊享8.8折</h4>
+<p class="text-[10px] text-gray-400 mt-1">仅限黄金及以上会员</p>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[9px] text-gray-300">有效期至 2026-04-30</span>
+<button class="bg-red-500 text-white text-[10px] px-3 py-1 rounded-full">已领取</button>
+</div>
+</div>
+</div>
+<!-- 赠品券 -->
+<div class="bg-white rounded-xl overflow-hidden flex shadow-sm border border-yellow-100 coupon-cutout">
+<div class="w-24 bg-gradient-to-b from-yellow-400 to-yellow-500 flex flex-col items-center justify-center text-white p-2">
+<iconify-icon icon="solar:cup-hot-bold" width="32"></iconify-icon>
+<span class="text-[10px] font-bold">赠饮券</span>
+</div>
+<div class="flex-1 p-3 flex flex-col justify-between">
+<div>
+<h4 class="text-sm font-bold text-gray-800">免费赠送招牌酸梅汤</h4>
+<p class="text-[10px] text-gray-400 mt-1">消费任意正餐即可使用</p>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[9px] text-gray-300">有效期至 2026-05-01</span>
+<button class="bg-yellow-500 text-white text-[10px] px-3 py-1 rounded-full">立即领取</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 限时秒杀 (PAGE: flash) -->
+<div class="page hidden" id="page-flash">
+<div class="h-32 bg-red-600 flex flex-col items-center justify-center text-white p-4">
+<h2 class="text-2xl font-bold italic tracking-wider">限时秒杀</h2>
+<div class="flex items-center gap-2 mt-2">
+<span class="text-xs text-red-100">距离本场结束</span>
+<div class="flex gap-1 text-sm font-bold">
+<span class="bg-white text-red-600 px-1.5 rounded">02</span>:
+                            <span class="bg-white text-red-600 px-1.5 rounded">45</span>:
+                            <span class="bg-white text-red-600 px-1.5 rounded">12</span>
+</div>
+</div>
+</div>
+<div class="px-4 -mt-4">
+<div class="space-y-4">
+<div class="bg-white rounded-xl p-3 shadow-lg flex gap-3 border border-red-50">
+<div class="w-28 h-28 rounded-lg overflow-hidden shrink-0">
+<img alt="Flash Item 1" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/91ef19f8120840c3bc8ef0d71b218bb1.jpg"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<h4 class="font-bold text-gray-800">黑椒铁板牛柳</h4>
+<p class="text-[10px] text-gray-400 mt-1">每日限量30份，先到先得</p>
+</div>
+<div>
+<div class="flex items-baseline gap-1">
+<span class="text-red-600 font-bold text-xl">¥19.9</span>
+<span class="text-xs text-gray-400 line-through">¥68</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="bg-red-500 h-full w-[85%]"></div>
+</div>
+<span class="text-[9px] text-red-500">已抢85%</span>
+</div>
+<button class="w-full mt-2 bg-red-600 text-white text-xs py-1.5 rounded-full font-bold">立即抢购</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl p-3 shadow-lg flex gap-3 border border-red-50">
+<div class="w-28 h-28 rounded-lg overflow-hidden shrink-0">
+<img alt="Flash Item 2" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/725b0ac87774402aad70da5fbeb66f6c.jpg"/>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<h4 class="font-bold text-gray-800">避风塘炒虾</h4>
+<p class="text-[10px] text-gray-400 mt-1">口感酥脆，鲜香味美</p>
+</div>
+<div>
+<div class="flex items-baseline gap-1">
+<span class="text-red-600 font-bold text-xl">¥29.9</span>
+<span class="text-xs text-gray-400 line-through">¥78</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="bg-red-500 h-full w-[40%]"></div>
+</div>
+<span class="text-[9px] text-red-500">已抢40%</span>
+</div>
+<button class="w-full mt-2 bg-red-600 text-white text-xs py-1.5 rounded-full font-bold">立即抢购</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 幸运抽奖 (PAGE: lucky) -->
+<div class="page hidden" id="page-lucky">
+<div class="px-4 py-6">
+<div class="bg-gradient-to-b from-[#FFB703] to-[#FF6B00] rounded-3xl p-6 shadow-xl relative">
+<div class="text-center text-white mb-6">
+<h2 class="text-2xl font-black italic">幸运大抽奖</h2>
+<p class="text-xs opacity-80 mt-1">消耗 50 积分/次</p>
+</div>
+<!-- 九宫格 -->
+<div class="grid grid-cols-3 gap-2 aspect-square mb-6">
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-0">
+<iconify-icon class="text-orange-500 mb-1" icon="solar:cup-hot-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">免费饮品</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-1">
+<iconify-icon class="text-yellow-500 mb-1" icon="solar:star-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">200积分</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-2">
+<iconify-icon class="text-red-500 mb-1" icon="solar:ticket-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">¥10代金券</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-7">
+<iconify-icon class="text-gray-400 mb-1" icon="solar:emoji-funny-circle-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">谢谢参与</span>
+</div>
+<div class="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl flex flex-col items-center justify-center p-2 text-center shadow-inner cursor-pointer active:scale-95 transition-transform" onclick="startLuckyDraw()">
+<span class="text-white font-black text-xl leading-tight">抽奖</span>
+<span class="text-white/80 text-[8px]">GO!</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-3">
+<iconify-icon class="text-yellow-500 mb-1" icon="solar:star-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">500积分</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-6">
+<iconify-icon class="text-red-500 mb-1" icon="solar:ticket-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">¥50大额券</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-5">
+<iconify-icon class="text-orange-600 mb-1" icon="solar:hamburger-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">招牌菜1份</span>
+</div>
+<div class="lucky-grid-item bg-white rounded-2xl flex flex-col items-center justify-center p-2 text-center" id="luck-4">
+<iconify-icon class="text-yellow-500 mb-1" icon="solar:star-bold" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">50积分</span>
+</div>
+</div>
+<div class="bg-black/10 rounded-xl p-3 text-white">
+<h4 class="text-xs font-bold flex items-center gap-1 mb-2">
+<iconify-icon icon="solar:notification-lines-remove-bold"></iconify-icon>
+                                中奖播报
+                            </h4>
+<div class="h-12 overflow-hidden text-[10px]">
+<div class="animate-pulse space-y-1">
+<p>恭喜用户 138****9281 抽中 招牌菜一份</p>
+<p>恭喜用户 155****0211 抽中 500积分</p>
+<p>恭喜用户 131****8822 抽中 ¥10代金券</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 拼团活动 (PAGE: group) -->
+<div class="page hidden" id="page-group">
+<div class="px-4 pt-4">
+<div class="flex items-center gap-2 mb-6">
+<div class="flex -space-x-3">
+<img alt="User 1" class="w-8 h-8 rounded-full border-2 border-white" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/5b2d54415e7c487dacf25fe666cb1b37.jpg"/>
+<img alt="User 2" class="w-8 h-8 rounded-full border-2 border-white" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/66c2ffa49f584314a3a387c20de436a5.jpg"/>
+<img alt="User 3" class="w-8 h-8 rounded-full border-2 border-white" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/0ec920eef7ec4c6fad2fc314bd56c68f.jpg"/>
+</div>
+<span class="text-xs text-gray-500">已有 3,429 人成功拼团</span>
+</div>
+<div class="space-y-6">
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-orange-50">
+<img alt="Group Dish 1" class="w-full h-48 object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/27a9e033368f484e80e4c26fc4ac59eb.jpg"/>
+<div class="p-4">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-gray-800 text-lg">【新客福利】双人午市火锅套餐</h3>
+<span class="bg-orange-100 text-orange-600 text-[10px] px-2 py-0.5 rounded">2人成团</span>
+</div>
+<p class="text-xs text-gray-400 mt-1 italic">新用户首次拼团立享3折优惠</p>
+<div class="flex items-center justify-between mt-6">
+<div>
+<span class="text-orange-600 font-bold text-2xl">¥69</span>
+<span class="text-sm text-gray-400 ml-1">门店价 ¥198</span>
+</div>
+<button class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold shadow-lg shadow-orange-200">去拼团</button>
+</div>
+<div class="mt-4 pt-4 border-t border-dashed border-gray-100 flex items-center justify-between text-[10px] text-gray-400">
+<span class="flex items-center gap-1"><iconify-icon class="text-green-500" icon="solar:check-circle-bold"></iconify-icon>新老同享好礼</span>
+<span class="flex items-center gap-1"><iconify-icon class="text-green-500" icon="solar:check-circle-bold"></iconify-icon>到店即享</span>
+<span class="flex items-center gap-1"><iconify-icon class="text-green-500" icon="solar:check-circle-bold"></iconify-icon>过期自动退</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 个人中心 (TAB: profile) -->
+<div class="page hidden" id="page-profile">
+<div class="bg-white px-6 pt-10 pb-6 rounded-b-[40px] shadow-sm">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full border-4 border-orange-100 overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-07/175d37a62f624a479771888ebdb6fd82.jpg"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h3 class="text-xl font-bold text-gray-800">张小悦</h3>
+<span class="bg-yellow-100 text-yellow-700 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-0.5">
+<iconify-icon icon="solar:crown-minimalistic-bold"></iconify-icon>
+                                    黄金会员
+                                </span>
+</div>
+<p class="text-xs text-gray-400 mt-1">ID: 20260407008</p>
+</div>
+<button class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600">
+<iconify-icon icon="solar:settings-bold" width="20"></iconify-icon>
+</button>
+</div>
+<div class="grid grid-cols-3 divide-x divide-gray-100">
+<div class="text-center">
+<p class="text-lg font-bold text-gray-800">4,280</p>
+<p class="text-[10px] text-gray-400">我的积分</p>
+</div>
+<div class="text-center">
+<p class="text-lg font-bold text-gray-800">6</p>
+<p class="text-[10px] text-gray-400">优惠券</p>
+</div>
+<div class="text-center">
+<p class="text-lg font-bold text-gray-800">¥156</p>
+<p class="text-[10px] text-gray-400">钱包余额</p>
+</div>
+</div>
+</div>
+<div class="px-4 mt-6">
+<div class="bg-white rounded-2xl shadow-sm border border-gray-50 overflow-hidden">
+<div class="p-4 border-b border-gray-50 flex items-center justify-between">
+<h4 class="font-bold text-gray-800">会员服务</h4>
+</div>
+<div class="p-2">
+<button class="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors">
+<div class="flex items-center gap-3">
+<iconify-icon class="text-orange-500" icon="solar:clapperboard-edit-bold" width="20"></iconify-icon>
+<span class="text-sm text-gray-700">积分兑换记录</span>
+</div>
+<iconify-icon class="text-gray-300" icon="solar:alt-arrow-right-bold-duotone"></iconify-icon>
+</button>
+<button class="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors">
+<div class="flex items-center gap-3">
+<iconify-icon class="text-pink-500" icon="solar:bag-heart-bold" width="20"></iconify-icon>
+<span class="text-sm text-gray-700">我的拼团记录</span>
+</div>
+<iconify-icon class="text-gray-300" icon="solar:alt-arrow-right-bold-duotone"></iconify-icon>
+</button>
+<button class="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors">
+<div class="flex items-center gap-3">
+<iconify-icon class="text-blue-500" icon="solar:user-speak-bold" width="20"></iconify-icon>
+<span class="text-sm text-gray-700">我的评价</span>
+</div>
+<iconify-icon class="text-gray-300" icon="solar:alt-arrow-right-bold-duotone"></iconify-icon>
+</button>
+<button class="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors">
+<div class="flex items-center gap-3">
+<iconify-icon class="text-green-500" icon="solar:map-point-bold" width="20"></iconify-icon>
+<span class="text-sm text-gray-700">收货地址</span>
+</div>
+<iconify-icon class="text-gray-300" icon="solar:alt-arrow-right-bold-duotone"></iconify-icon>
+</button>
+</div>
+</div>
+<div class="mt-4 bg-white rounded-2xl shadow-sm border border-gray-50 overflow-hidden">
+<div class="p-2">
+<button class="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors">
+<div class="flex items-center gap-3">
+<iconify-icon class="text-purple-500" icon="solar:shield-check-bold" width="20"></iconify-icon>
+<span class="text-sm text-gray-700">隐私与协议</span>
+</div>
+<iconify-icon class="text-gray-300" icon="solar:alt-arrow-right-bold-duotone"></iconify-icon>
+</button>
+<button class="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors">
+<div class="flex items-center gap-3">
+<iconify-icon class="text-red-500" icon="solar:phone-calling-bold" width="20"></iconify-icon>
+<span class="text-sm text-gray-700">联系在线客服</span>
+</div>
+<iconify-icon class="text-gray-300" icon="solar:alt-arrow-right-bold-duotone"></iconify-icon>
+</button>
+</div>
+</div>
+</div>
+<div class="px-6 py-10 text-center">
+<p class="text-[10px] text-gray-300 italic">食悦餐饮 - 会员中心版 v3.2.0 (20260407)</p>
+</div>
+</div>
+</div>
+<!-- 底部导航栏 -->
+<div class="absolute bottom-0 left-0 right-0 h-20 bg-white/90 backdrop-blur-lg border-t border-gray-100 flex items-center justify-around px-2 pb-4 z-50">
+<button class="nav-btn flex flex-col items-center gap-1 text-orange-600" data-tab="home" onclick="switchPage('home')">
+<iconify-icon icon="solar:home-smile-bold-duotone" width="24"></iconify-icon>
+<span class="text-[10px] font-bold">首页</span>
+</button>
+<button class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-tab="mall" onclick="switchPage('mall')">
+<iconify-icon icon="solar:gift-bold-duotone" width="24"></iconify-icon>
+<span class="text-[10px] font-medium">兑换</span>
+</button>
+<button class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-tab="coupons" onclick="switchPage('coupons')">
+<iconify-icon icon="solar:ticket-bold-duotone" width="24"></iconify-icon>
+<span class="text-[10px] font-medium">卡券</span>
+</button>
+<button class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-tab="profile" onclick="switchPage('profile')">
+<iconify-icon icon="solar:user-bold-duotone" width="24"></iconify-icon>
+<span class="text-[10px] font-medium">我的</span>
+</button>
+</div>
+<!-- 页面提示弹窗 -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white px-6 py-3 rounded-xl text-sm opacity-0 transition-opacity pointer-events-none z-[100]" id="toast">
+            恭喜！成功兑换
+        </div>
+</div>
+<script>
+        function switchPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            // 显示目标页面
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hidden');
+                // 平滑回滚到顶部
+                document.getElementById('app-content').scrollTo({top:0, behavior:'smooth'});
+            }
+
+            // 更新标题
+            const titles = {
+                'home': '食悦会员中心',
+                'mall': '积分商城',
+                'coupons': '领券中心',
+                'profile': '个人中心',
+                'flash': '限时秒杀',
+                'lucky': '幸运大抽奖',
+                'group': '超级拼团'
+            };
+            document.getElementById('page-title').innerText = titles[pageId] || '食悦会员';
+
+            // 更新导航高亮 (如果是底部TAB)
+            const navTabs = ['home', 'mall', 'coupons', 'profile'];
+            if (navTabs.includes(pageId)) {
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    if (btn.dataset.tab === pageId) {
+                        btn.classList.add('text-orange-600');
+                        btn.classList.remove('text-gray-400');
+                        btn.querySelector('span').classList.replace('font-medium', 'font-bold');
+                    } else {
+                        btn.classList.remove('text-orange-600');
+                        btn.classList.add('text-gray-400');
+                        btn.querySelector('span').classList.replace('font-bold', 'font-medium');
+                    }
+                });
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 2000);
+        }
+
+        let isDrawing = false;
+        function startLuckyDraw() {
+            if (isDrawing) return;
+            isDrawing = true;
+            
+            let count = 0;
+            let current = 0;
+            const totalSteps = 24 + Math.floor(Math.random() * 8); // 基础3圈 + 随机位置
+            
+            const timer = setInterval(() => {
+                document.querySelectorAll('.lucky-grid-item').forEach(el => el.classList.remove('active'));
+                document.getElementById('luck-' + (current % 8)).classList.add('active');
+                
+                current++;
+                count++;
+                
+                if (count >= totalSteps) {
+                    clearInterval(timer);
+                    isDrawing = false;
+                    const prize = document.getElementById('luck-' + (current % 8)).querySelector('span').innerText;
+                    setTimeout(() => showToast('恭喜抽中：' + prize + '!'), 500);
+                }
+            }, 80);
+        }
+
+        // 模拟一些动态逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            // 设置日期相关的文案
+            const today = new Date();
+            console.log("System initialized on: 2026-04-07");
+        });
+    </script>
+</body>
+</html>

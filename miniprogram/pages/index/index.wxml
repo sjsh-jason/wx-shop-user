@@ -1,0 +1,120 @@
+<view class="page-container">
+  <view class="member-card">
+    <view class="card-bg"></view>
+    <view class="card-content">
+      <view class="card-header">
+        <view class="level-info">
+          <text class="level-label">当前会员等级</text>
+          <view class="level-name">
+            <text class="level-text">黄金会员</text>
+          </view>
+        </view>
+        <view class="level-badge">V2 会员</view>
+      </view>
+
+      <view class="progress-section">
+        <view class="progress-header">
+          <text class="progress-text">成长值 {{userInfo.points || 0}}/2000</text>
+          <text class="progress-text">距铂金会员还差720</text>
+        </view>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: 64%"></view>
+        </view>
+      </view>
+
+      <view class="stats-section">
+        <view class="stat-item">
+          <text class="stat-label">可用积分</text>
+          <text class="stat-value">{{userInfo.points || 0}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">优惠券</text>
+          <text class="stat-value">6</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">钱包余额</text>
+          <text class="stat-value">¥156.5</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="quick-nav">
+    <view class="nav-item" bindtap="navTo" data-url="/pages/mall/mall">
+      <view class="nav-icon nav-orange">
+        <icon type="waiting" size="24"></icon>
+      </view>
+      <text class="nav-text">积分商城</text>
+    </view>
+    <view class="nav-item" bindtap="goCheckIn">
+      <view class="nav-icon nav-green">
+        <icon type="success" size="24"></icon>
+      </view>
+      <text class="nav-text">每日签到</text>
+    </view>
+    <view class="nav-item" bindtap="goLuckyDraw">
+      <view class="nav-icon nav-yellow">
+        <icon type="waiting" size="24"></icon>
+      </view>
+      <text class="nav-text">幸运抽奖</text>
+    </view>
+    <view class="nav-item" bindtap="navTo" data-url="/pages/exchanged/exchanged">
+      <view class="nav-icon nav-pink">
+        <icon type="waiting" size="24"></icon>
+      </view>
+      <text class="nav-text">待领取</text>
+    </view>
+  </view>
+
+  <view class="banner-section">
+    <view class="banner">
+      <view class="banner-content">
+        <text class="banner-title">2026春季上新</text>
+        <text class="banner-desc">老客邀请新客，双双得50元券</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="promo-section">
+    <view class="section-header">
+      <text class="section-title">热门促销活动</text>
+      <text class="section-more">查看全部 ></text>
+    </view>
+
+    <view class="promo-card">
+      <view class="promo-image">
+        <image src="/images/placeholder.png" mode="aspectFill" class="product-image"></image>
+        <view class="promo-tag">秒杀</view>
+      </view>
+      <view class="promo-info">
+        <view class="promo-title">秘制红烧肉 (大份)</view>
+        <view class="promo-desc">精选五花肉，72道工序秘制</view>
+        <view class="promo-bottom">
+          <view class="price-section">
+            <text class="price-current">¥9.9</text>
+            <text class="price-original">¥58</text>
+          </view>
+          <view class="buy-btn">立即抢购</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="promo-card">
+      <view class="promo-image">
+        <image src="/images/placeholder.png" mode="aspectFill" class="product-image"></image>
+        <view class="promo-tag promo-tag-orange">拼团</view>
+      </view>
+      <view class="promo-info">
+        <view class="promo-title">双人奢享套餐</view>
+        <view class="promo-desc">3荤2素+招牌饮品</view>
+        <view class="promo-bottom">
+          <view class="price-section">
+            <text class="price-current price-orange">¥88</text>
+            <text class="group-text">2人团</text>
+          </view>
+          <view class="buy-btn buy-btn-orange">去拼团</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

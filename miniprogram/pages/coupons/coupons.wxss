@@ -1,0 +1,144 @@
+.page-container {
+  min-height: 100vh;
+  background: #F8F9FA;
+  padding-bottom: 32rpx;
+}
+
+.coupon-header {
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 107, 0, 0.05) 100%);
+  margin: 30rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.header-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: #FF6B00;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #9A3412;
+  margin-bottom: 8rpx;
+}
+
+.header-desc {
+  display: block;
+  font-size: 22rpx;
+  color: #EA580C;
+}
+
+.coupon-list {
+  padding: 0 30rpx;
+}
+
+.coupon-item {
+  background: #ffffff;
+  border-radius: 24rpx;
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+  border: 2rpx solid #FFE6D6;
+  position: relative;
+}
+
+.coupon-item::before,
+.coupon-item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 32rpx;
+  height: 32rpx;
+  background: #F8F9FA;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.coupon-item::before {
+  left: -16rpx;
+}
+
+.coupon-item::after {
+  right: -16rpx;
+}
+
+.coupon-left {
+  width: 160rpx;
+  background: linear-gradient(135deg, #FB923C 0%, #F97316 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  padding: 32rpx 16rpx;
+  flex-shrink: 0;
+}
+
+.coupon-symbol {
+  font-size: 24rpx;
+  color: #ffffff;
+}
+
+.coupon-value {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.coupon-right {
+  flex: 1;
+  padding: 32rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.coupon-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+
+.coupon-desc {
+  display: block;
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.coupon-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24rpx;
+}
+
+.coupon-expire {
+  font-size: 18rpx;
+  color: #D1D5DB;
+}
+
+.claim-btn {
+  background: #F97316;
+  color: #ffffff;
+  font-size: 20rpx;
+  font-weight: 500;
+  padding: 12rpx 28rpx;
+  border-radius: 30rpx;
+}

@@ -1,0 +1,120 @@
+.page-container {
+  min-height: 100vh;
+  background: #F8F9FA;
+  padding: 20rpx;
+}
+
+.header-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20rpx;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx 32rpx;
+  background: linear-gradient(90deg, #FF6B00 0%, #FF8C00 100%);
+  color: #FFFFFF;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.prize-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.prize-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.prize-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  flex: 1;
+}
+
+.prize-icon {
+  width: 100rpx;
+  height: 100rpx;
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.prize-detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.prize-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prize-meta {
+  display: flex;
+  gap: 16rpx;
+}
+
+.prize-type {
+  font-size: 24rpx;
+  color: #FF6B00;
+  background: #FFF0E6;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.prize-prob {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.prize-status {
+  flex-shrink: 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 120rpx 0;
+}
+
+.empty-text {
+  display: block;
+  font-size: 28rpx;
+  color: #999;
+  margin-top: 24rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 80rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

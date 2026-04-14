@@ -1,0 +1,37 @@
+<view class="page-container">
+  <view class="header-section">
+    <view class="add-btn" bindtap="showAddModal">
+      <icon type="success" size="16"></icon>
+      <text>添加奖品</text>
+    </view>
+  </view>
+
+  <view class="prize-list">
+    <view wx:for="{{prizes}}" wx:key="id" class="prize-card">
+      <view class="prize-info">
+        <view class="prize-icon">
+          <text class="icon-text">{{item.iconText}}</text>
+        </view>
+        <view class="prize-detail">
+          <text class="prize-name">{{item.name}}</text>
+          <view class="prize-meta">
+            <text class="prize-type">{{getTypeText(item.type)}}</text>
+            <text class="prize-prob">概率: {{item.probability}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="prize-status">
+        <switch checked="{{item.status === 1}}" bindchange="toggleStatus" data-id="{{item.id}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{prizes.length === 0 && !loading}}">
+    <icon type="waiting" size="64" color="#ddd"></icon>
+    <text class="empty-text">暂无奖品</text>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

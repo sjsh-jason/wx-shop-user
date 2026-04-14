@@ -1,0 +1,72 @@
+<view class="page-container">
+  <view class="points-header">
+    <view class="points-info" bindtap="goToPointsLog">
+      <view class="points-icon-box">
+        <icon type="waiting" size="40" color="#FF6B00"></icon>
+      </view>
+      <view class="points-text">
+        <text class="points-label">当前可用积分</text>
+        <text class="points-value">{{userInfo.points || 0}}</text>
+      </view>
+    </view>
+    <view class="points-action" bindtap="goToPointsLog">
+      <text class="points-detail">积分明细</text>
+      <icon type="info" size="12" color="#999"></icon>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view
+      wx:for="{{categories}}"
+      wx:key="key"
+      class="tab-item {{currentCategory === item.key ? 'active' : ''}}"
+      data-category="{{item.key}}"
+      bindtap="switchCategory"
+    >
+      {{item.name}}
+    </view>
+  </view>
+
+  <view class="product-list" wx:if="{{!loading}}">
+    <view wx:if="{{products.length > 0}}">
+      <view
+        wx:for="{{products}}"
+        wx:key="id"
+        class="product-card"
+        data-product="{{item}}"
+        bindtap="exchangeProduct"
+      >
+        <image class="product-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+        <view class="image-placeholder" wx:else>
+          <text class="placeholder-text">{{item.name ? item.name.charAt(0) : '礼'}}</text>
+        </view>
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
+          <view class="product-meta">
+            <text class="stock" wx:if="{{item.stock > 0}}">库存: {{item.stock}}</text>
+            <text class="stock out" wx:else>已抢光</text>
+            <text class="exchanged" wx:if="{{item.exchangedCount > 0}}">已兑换{{item.exchangedCount}}</text>
+          </view>
+          <view class="product-bottom">
+            <view class="product-points">
+              <icon type="waiting" size="14" color="#FCD34D"></icon>
+              <text class="points-num">{{item.points}}</text>
+              <text class="points-unit">积分</text>
+            </view>
+            <view class="exchange-btn {{item.stock <= 0 ? 'disabled' : ''}}">
+              {{item.stock > 0 ? '立即兑换' : '已抢光'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty">
+      <icon type="waiting" size="64" color="#ddd"></icon>
+      <text class="empty-text">暂无积分商品</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

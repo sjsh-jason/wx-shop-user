@@ -1,0 +1,21 @@
+{
+  "project": {
+    "name": "餐饮会员小程序",
+    "type": "wechat-miniprogram",
+    "language": "zh-CN"
+  },
+  "workflow": {
+    "autoCommit": false,
+    "codeReview": true,
+    "testing": false
+  },
+  "techStack": {
+    "frontend": "native-miniprogram",
+    "backend": "java-springboot",
+    "database": "mysql"
+  },
+  "paths": {
+    "requirements": "doc/requiremenDoc.md",
+    "prototype": "餐饮会员小程序.html"
+  }
+}

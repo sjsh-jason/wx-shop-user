@@ -1,0 +1,38 @@
+<view class="page-container">
+  <view class="tabs">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-tab="0">
+      全部
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-tab="1">
+      待核销
+    </view>
+    <view class="tab-item {{currentTab === 2 ? 'active' : ''}}" bindtap="switchTab" data-tab="2">
+      已核销
+    </view>
+  </view>
+
+  <view class="list-container">
+    <view class="reservation-card" wx:for="{{filteredList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="card-header">
+        <text class="product-name">{{item.productName}}</text>
+        <view class="status-tag" style="color: {{getStatusColor(item.status)}}">
+          {{getStatusText(item.status)}}
+        </view>
+      </view>
+      <view class="card-content">
+        <image src="{{item.productImage || '/images/placeholder.png'}}" mode="aspectFill" class="product-image"></image>
+        <view class="info-section">
+          <view class="price-row">
+            <text class="price">¥{{item.promotionPrice}}</text>
+            <text class="original-price">¥{{item.originalPrice}}</text>
+          </view>
+          <text class="time-text">预约时间: {{formatTime(item.createTime)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-tip" wx:if="{{filteredList.length === 0 && !loading}}">
+      <text>暂无预约记录</text>
+    </view>
+  </view>
+</view>

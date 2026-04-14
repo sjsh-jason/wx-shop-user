@@ -1,0 +1,40 @@
+<view class="login-container">
+  <view class="login-content">
+    <view class="logo-section">
+      <view class="logo">
+        <text class="logo-text">食悦</text>
+      </view>
+      <text class="app-name">餐饮会员中心</text>
+    </view>
+
+    <view class="welcome-section">
+      <text class="welcome-title">欢迎加入会员</text>
+      <text class="welcome-desc">扫码注册，享受更多优惠</text>
+    </view>
+
+    <view class="privacy-section">
+      <checkbox-group bindchange="onPrivacyChange">
+        <label class="privacy-label">
+          <checkbox value="agree" checked="{{agreed}}" color="#FF6B00"/>
+          <text class="privacy-text">我已阅读并同意</text>
+          <text class="privacy-link">《用户协议》</text>
+          <text class="privacy-text">和</text>
+          <text class="privacy-link">《隐私政策》</text>
+        </label>
+      </checkbox-group>
+    </view>
+
+    <button
+      class="login-btn {{!agreed ? 'disabled' : ''}}"
+      disabled="{{!agreed}}"
+      open-type="getUserInfo"
+      bindgetuserinfo="onGetUserInfo"
+    >
+      微信一键登录
+    </button>
+
+    <view class="tips-section">
+      <text class="tips-text">登录即表示同意微信授权</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,44 @@
+<view class="page-container">
+  <view class="header-section">
+    <text class="title">幸运大抽奖</text>
+    <text class="subtitle">每日限抽一次</text>
+  </view>
+
+  <view class="lottery-box">
+    <view class="lottery-grid">
+      <view
+        wx:for="{{prizes}}"
+        wx:key="id"
+        class="grid-item {{currentIndex === index ? 'active' : ''}}"
+      >
+        <view class="prize-icon">
+          <text class="icon-text">{{item.iconText}}</text>
+        </view>
+        <text class="prize-name">{{item.name}}</text>
+      </view>
+    </view>
+
+    <view class="start-btn {{isRunning || hasDrawn ? 'disabled' : ''}}" bindtap="startDraw">
+      {{hasDrawn ? '今日已抽' : (isRunning ? '抽奖中...' : '开始抽奖')}}
+    </view>
+  </view>
+
+  <view class="tips-section">
+    <view class="tips-title">活动说明</view>
+    <view class="tips-list">
+      <text class="tip-item">• 每位会员每日可抽奖一次</text>
+      <text class="tip-item">• 积分奖励即时到账</text>
+      <text class="tip-item">• 实物奖品请到店领取</text>
+    </view>
+  </view>
+
+  <view class="record-section" wx:if="{{myDraws.length > 0}}">
+    <view class="record-title">最近抽奖</view>
+    <view class="record-list">
+      <view wx:for="{{myDraws}}" wx:key="id" class="record-item">
+        <text class="record-prize">{{item.prizeName}}</text>
+        <text class="record-time">{{formatTime(item.createTime)}}</text>
+      </view>
+    </view>
+  </view>
+</view>

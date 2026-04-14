@@ -1,0 +1,51 @@
+<view class="page-container">
+  <view class="search-section">
+    <view class="search-box">
+      <icon type="info" size="16" color="#999"></icon>
+      <input class="search-input" placeholder="搜索客户昵称或手机号" value="{{searchKeyword}}" bindinput="onSearchInput" />
+    </view>
+  </view>
+
+  <view class="stats-section">
+    <view class="stat-card">
+      <text class="stat-value">{{totalCustomers}}</text>
+      <text class="stat-label">总客户数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{todayNew}}</text>
+      <text class="stat-label">今日新增</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{activeCustomers}}</text>
+      <text class="stat-label">活跃客户</text>
+    </view>
+  </view>
+
+  <view class="customer-list">
+    <view wx:for="{{customers}}" wx:key="id" class="customer-card">
+      <image class="customer-avatar" src="{{item.avatar || '/images/avatar.png'}}" mode="aspectFill"></image>
+      <view class="customer-info">
+        <view class="customer-name-row">
+          <text class="customer-name">{{item.nickname || '微信用户'}}</text>
+          <view class="level-badge">V{{item.level || 1}}</view>
+        </view>
+        <view class="customer-meta">
+          <text class="customer-phone">{{item.phone || '未绑定手机'}}</text>
+          <text class="customer-points">{{item.points || 0}}积分</text>
+        </view>
+      </view>
+      <view class="customer-time">
+        <text class="join-date">{{formatDate(item.createTime)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{customers.length === 0 && !loading}}">
+    <icon type="waiting" size="64" color="#ddd"></icon>
+    <text class="empty-text">暂无客户</text>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>
