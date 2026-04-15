@@ -1,5 +1,6 @@
 server:
   port: 8080
+  address: 0.0.0.0
 
 spring:
   application:
@@ -8,7 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/wx_shop_member?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: admin123
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
@@ -24,8 +25,8 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 wx:
-  appid: your-appid
-  secret: your-secret
+  appid: wxf3caf482017702c4
+  secret: 22b2f5ec0f016b0b8467f4300277db3f
 
 jwt:
   secret: wx-shop-member-jwt-secret-key-2026

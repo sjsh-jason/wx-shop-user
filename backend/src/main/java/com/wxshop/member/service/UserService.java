@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -67,6 +68,10 @@ public class UserService {
 
     public User getUserById(Long userId) {
         return userMapper.selectById(userId);
+    }
+
+    public List<User> getAllUsers() {
+        return userMapper.selectList(null);
     }
 
     @Transactional

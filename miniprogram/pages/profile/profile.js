@@ -66,5 +66,17 @@ Page({
     wx.navigateTo({
       url: '/pages/points-log/points-log'
     });
+  },
+
+  goToPrizeManage() {
+    wx.navigateTo({
+      url: '/pages/prize-manage/prize-manage'
+    });
+  },
+
+  goToCustomerList() {
+    wx.navigateTo({
+      url: '/pages/customer-list/customer-list'
+    });
   }
 });
