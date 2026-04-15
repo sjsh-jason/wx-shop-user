@@ -28,7 +28,7 @@
   </view>
 
   <view class="product-list" wx:if="{{!loading}}">
-    <view wx:if="{{products.length > 0}}">
+    <view wx:if="{{products.length > 0}}" class="product-grid">
       <view
         wx:for="{{products}}"
         wx:key="id"
@@ -36,17 +36,15 @@
         data-product="{{item}}"
         bindtap="exchangeProduct"
       >
-        <image class="product-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
-        <view class="image-placeholder" wx:else>
-          <text class="placeholder-text">{{item.name ? item.name.charAt(0) : '礼'}}</text>
+        <view class="product-image-wrapper">
+          <image class="product-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+          <view class="image-placeholder" wx:else>
+            <text class="coupon-text" wx:if="{{item.type === 'coupon'}}">¥{{item.points / 50}}</text>
+            <text class="placeholder-text" wx:else>{{item.name ? item.name.charAt(0) : '礼'}}</text>
+          </view>
         </view>
         <view class="product-info">
           <text class="product-name">{{item.name}}</text>
-          <view class="product-meta">
-            <text class="stock" wx:if="{{item.stock > 0}}">库存: {{item.stock}}</text>
-            <text class="stock out" wx:else>已抢光</text>
-            <text class="exchanged" wx:if="{{item.exchangedCount > 0}}">已兑换{{item.exchangedCount}}</text>
-          </view>
           <view class="product-bottom">
             <view class="product-points">
               <icon type="waiting" size="14" color="#FCD34D"></icon>

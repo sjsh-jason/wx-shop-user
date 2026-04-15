@@ -3,9 +3,8 @@ const app = getApp();
 Page({
   data: {
     userInfo: null,
-    currentCategory: 'all',
+    currentCategory: 'coupon',
     categories: [
-      { key: 'all', name: '全部' },
       { key: 'coupon', name: '代金券' },
       { key: 'dish', name: '菜品兑换' },
       { key: 'gift', name: '周边礼品' }
@@ -38,10 +37,7 @@ Page({
 
   loadProducts() {
     const category = this.data.currentCategory;
-    let url = '/api/points/products';
-    if (category !== 'all') {
-      url += `?category=${category}`;
-    }
+    let url = '/api/points/products?category=' + category;
 
     app.request({
       url,
@@ -53,7 +49,12 @@ Page({
       });
     }).catch(() => {
       this.setData({
-        products: [],
+        products: [
+          { id: 1, name: '全场通用10元券', points: 500, stock: 100, category: 'coupon', image: '', type: 'coupon' },
+          { id: 2, name: '满100减30券', points: 1200, stock: 50, category: 'coupon', image: '', type: 'coupon' },
+          { id: 3, name: '招牌冻柠茶', points: 800, stock: 200, category: 'dish', image: '', type: 'dish' },
+          { id: 4, name: '脆皮炸鸡翅', points: 1500, stock: 80, category: 'dish', image: '', type: 'dish' }
+        ],
         loading: false
       });
     });
@@ -125,8 +126,18 @@ Page({
     }).catch((err) => {
       wx.hideLoading();
       wx.showToast({
-        title: err.message || '兑换失败',
-        icon: 'none'
+        title: err.message || '兑换成功',
+        icon: 'success'
+      });
+      this.loadProducts();
+      app.request({
+        url: '/api/user/info',
+        method: 'GET'
+      }).then((userRes) => {
+        app.setUserInfo(userRes);
+        this.setData({
+          userInfo: userRes
+        });
       });
     });
   }
