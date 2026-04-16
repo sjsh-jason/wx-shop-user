@@ -20,7 +20,8 @@
         </view>
       </view>
       <view class="card-content">
-        <image src="{{item.productImage || '/images/placeholder.png'}}" mode="aspectFill" class="product-image"></image>
+        <view class="product-image-placeholder" wx:if="{{!item.productImage}}"></view>
+        <image src="{{item.productImage}}" mode="aspectFill" class="product-image" wx:else></image>
         <view class="info-section">
           <view class="price-row">
             <text class="price">¥{{item.promotionPrice}}</text>

@@ -40,6 +40,24 @@ CREATE TABLE `merchant_whitelist` (
     KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商家白名单表';
 
+-- 商品中心表（基础商品库）
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `name` VARCHAR(100) NOT NULL COMMENT '商品名称',
+    `image` VARCHAR(255) DEFAULT NULL COMMENT '商品图片',
+    `description` VARCHAR(500) DEFAULT NULL COMMENT '商品描述',
+    `type` VARCHAR(50) NOT NULL COMMENT '商品类型: coupon-代金券, dish-菜品, gift-其他礼品',
+    `price` DECIMAL(10,2) DEFAULT NULL COMMENT '商品价格',
+    `stock` INT NOT NULL DEFAULT 0 COMMENT '库存',
+    `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态: 0-下架, 1-上架',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_type` (`type`),
+    KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品中心表';
+
 -- 促销商品表
 DROP TABLE IF EXISTS `promotion_product`;
 CREATE TABLE `promotion_product` (
@@ -52,12 +70,14 @@ CREATE TABLE `promotion_product` (
     `sold_count` INT NOT NULL DEFAULT 0 COMMENT '已售数量',
     `start_time` DATETIME DEFAULT NULL COMMENT '活动开始时间',
     `end_time` DATETIME DEFAULT NULL COMMENT '活动结束时间',
+    `product_id` BIGINT DEFAULT NULL COMMENT '关联商品ID',
     `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态: 0-下架, 1-上架',
     `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`),
     KEY `idx_status` (`status`),
-    KEY `idx_start_time` (`start_time`)
+    KEY `idx_start_time` (`start_time`),
+    KEY `idx_product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='促销商品表';
 
 -- 预约记录表
@@ -92,12 +112,14 @@ CREATE TABLE `points_product` (
     `category` VARCHAR(50) DEFAULT NULL COMMENT '分类: coupon-代金券, dish-菜品, gift-周边',
     `stock` INT NOT NULL DEFAULT 0 COMMENT '库存',
     `exchanged_count` INT NOT NULL DEFAULT 0 COMMENT '已兑换数量',
+    `product_id` BIGINT DEFAULT NULL COMMENT '关联商品ID',
     `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态: 0-下架, 1-上架',
     `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`),
     KEY `idx_status` (`status`),
-    KEY `idx_category` (`category`)
+    KEY `idx_category` (`category`),
+    KEY `idx_product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分商品表';
 
 -- 兑换记录表
@@ -219,4 +241,13 @@ INSERT INTO `prize` (`name`, `icon`, `type`, `points`, `probability`, `sort_orde
 
 -- 初始化测试商家手机号（可替换为实际商家手机号）
 INSERT INTO `merchant_whitelist` (`phone`, `name`) VALUES
-('13800138000', '测试商家');
+('15800682653', '测试商家');
+
+-- 初始化测试商品数据
+INSERT INTO `product` (`name`, `image`, `description`, `type`, `price`, `stock`, `status`) VALUES
+('全场通用10元券', '', '全场通用，无门槛使用', 'coupon', 10.00, 100, 1),
+('满100减30券', '', '满100元可用', 'coupon', 30.00, 50, 1),
+('招牌三合一（中份）', '', '清爽解腻，招牌鸡柳 薯条年糕', 'dish', 18.00, 200, 1),
+('招牌四合一(中份)', '', '外酥里嫩，香味四溢，鸡柳年糕薯条山药片', 'dish', 28.00, 80, 1),
+('定制帆布袋', '', '环保材质，限量周边', 'gift', 39.00, 30, 1),
+('定制水杯', '', '食品级材质，保温保冷', 'gift', 59.00, 20, 1);

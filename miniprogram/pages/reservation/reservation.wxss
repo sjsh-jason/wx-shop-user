@@ -73,6 +73,14 @@
   gap: 24rpx;
 }
 
+.product-image-placeholder {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  background: linear-gradient(135deg, #FFF0E6 0%, #FFF9E6 100%);
+  flex-shrink: 0;
+}
+
 .product-image {
   width: 160rpx;
   height: 160rpx;

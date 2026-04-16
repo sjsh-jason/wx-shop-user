@@ -125,6 +125,10 @@ Page({
     this.setData({ showProductPicker: false });
   },
 
+  preventBubble() {
+    // 阻止事件冒泡，防止点击弹窗内容时关闭弹窗
+  },
+
   selectProduct(e) {
     const product = e.currentTarget.dataset.product;
     this.setData({

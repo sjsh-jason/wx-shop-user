@@ -13,12 +13,12 @@ import java.util.List;
 public class PromotionProductController {
 
     @Resource
-    private PromotionProductService productService;
+    private PromotionProductService promotionProductService;
 
     @GetMapping("/products")
     public Result<List<PromotionProduct>> getProducts() {
         try {
-            List<PromotionProduct> products = productService.getActiveProducts();
+            List<PromotionProduct> products = promotionProductService.getActiveProducts();
             return Result.success(products);
         } catch (Exception e) {
             return Result.error(e.getMessage());
@@ -28,7 +28,7 @@ public class PromotionProductController {
     @GetMapping("/products/all")
     public Result<List<PromotionProduct>> getAllProducts() {
         try {
-            List<PromotionProduct> products = productService.getAllProducts();
+            List<PromotionProduct> products = promotionProductService.getAllProducts();
             return Result.success(products);
         } catch (Exception e) {
             return Result.error(e.getMessage());
@@ -38,7 +38,7 @@ public class PromotionProductController {
     @GetMapping("/products/{id}")
     public Result<PromotionProduct> getProductDetail(@PathVariable Long id) {
         try {
-            PromotionProduct product = productService.getProductById(id);
+            PromotionProduct product = promotionProductService.getProductById(id);
             if (product == null) {
                 return Result.error("商品不存在");
             }
@@ -51,7 +51,7 @@ public class PromotionProductController {
     @PostMapping("/products")
     public Result<PromotionProduct> createProduct(@RequestBody PromotionProduct product) {
         try {
-            PromotionProduct created = productService.createProduct(product);
+            PromotionProduct created = promotionProductService.createProduct(product);
             return Result.success(created);
         } catch (Exception e) {
             return Result.error(e.getMessage());
@@ -62,7 +62,7 @@ public class PromotionProductController {
     public Result<PromotionProduct> updateProduct(@PathVariable Long id, @RequestBody PromotionProduct product) {
         try {
             product.setId(id);
-            PromotionProduct updated = productService.updateProduct(product);
+            PromotionProduct updated = promotionProductService.updateProduct(product);
             return Result.success(updated);
         } catch (Exception e) {
             return Result.error(e.getMessage());
@@ -72,7 +72,7 @@ public class PromotionProductController {
     @DeleteMapping("/products/{id}")
     public Result<Void> deleteProduct(@PathVariable Long id) {
         try {
-            boolean deleted = productService.deleteProduct(id);
+            boolean deleted = promotionProductService.deleteProduct(id);
             if (deleted) {
                 return Result.success();
             } else {
@@ -86,7 +86,7 @@ public class PromotionProductController {
     @PutMapping("/products/{id}/status")
     public Result<Void> updateStatus(@PathVariable Long id, @RequestBody PromotionProduct product) {
         try {
-            boolean updated = productService.updateStatus(id, product.getStatus());
+            boolean updated = promotionProductService.updateStatus(id, product.getStatus());
             if (updated) {
                 return Result.success();
             } else {

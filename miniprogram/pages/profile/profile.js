@@ -96,5 +96,21 @@ Page({
     wx.navigateTo({
       url: '/pages/points-product-manage/points-product-manage'
     });
+  },
+
+  logout() {
+    wx.showModal({
+      title: '提示',
+      content: '确定要退出登录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          app.setToken(null);
+          app.setUserInfo(null);
+          wx.reLaunch({
+            url: '/pages/login/login'
+          });
+        }
+      }
+    });
   }
 });

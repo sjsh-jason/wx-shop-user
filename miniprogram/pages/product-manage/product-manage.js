@@ -107,6 +107,10 @@ Page({
     this.setData({ showModal: false });
   },
 
+  preventBubble() {
+    // 阻止事件冒泡，防止点击弹窗内容时关闭弹窗
+  },
+
   onInputChange(e) {
     const field = e.currentTarget.dataset.field;
     const value = e.detail.value;

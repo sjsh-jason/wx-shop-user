@@ -16,7 +16,7 @@ Page({
     this.setData({ agreed });
   },
 
-  onGetUserInfo(e) {
+  onGetUserInfo() {
     if (!this.data.agreed) {
       wx.showToast({
         title: '请先同意用户协议',

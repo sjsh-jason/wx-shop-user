@@ -13,7 +13,7 @@ import java.util.List;
 public class PromotionProductService {
 
     @Resource
-    private PromotionProductMapper productMapper;
+    private PromotionProductMapper promotionProductMapper;
 
     public List<PromotionProduct> getActiveProducts() {
         LocalDateTime now = LocalDateTime.now();
@@ -23,50 +23,50 @@ public class PromotionProductService {
                 .ge(PromotionProduct::getEndTime, now)
                 .gt(PromotionProduct::getStock, 0)
                 .orderByDesc(PromotionProduct::getCreateTime);
-        return productMapper.selectList(wrapper);
+        return promotionProductMapper.selectList(wrapper);
     }
 
     public List<PromotionProduct> getAllProducts() {
         LambdaQueryWrapper<PromotionProduct> wrapper = new LambdaQueryWrapper<>();
         wrapper.orderByDesc(PromotionProduct::getCreateTime);
-        return productMapper.selectList(wrapper);
+        return promotionProductMapper.selectList(wrapper);
     }
 
     public PromotionProduct getProductById(Long id) {
-        return productMapper.selectById(id);
+        return promotionProductMapper.selectById(id);
     }
 
     public PromotionProduct createProduct(PromotionProduct product) {
         product.setStatus(1);
         product.setSoldCount(0);
-        productMapper.insert(product);
+        promotionProductMapper.insert(product);
         return product;
     }
 
     public PromotionProduct updateProduct(PromotionProduct product) {
-        productMapper.updateById(product);
+        promotionProductMapper.updateById(product);
         return product;
     }
 
     public boolean deleteProduct(Long id) {
-        return productMapper.deleteById(id) > 0;
+        return promotionProductMapper.deleteById(id) > 0;
     }
 
     public boolean updateStatus(Long id, Integer status) {
         PromotionProduct product = new PromotionProduct();
         product.setId(id);
         product.setStatus(status);
-        return productMapper.updateById(product) > 0;
+        return promotionProductMapper.updateById(product) > 0;
     }
 
     public boolean decreaseStock(Long productId) {
-        PromotionProduct product = productMapper.selectById(productId);
+        PromotionProduct product = promotionProductMapper.selectById(productId);
         if (product == null || product.getStock() <= 0) {
             return false;
         }
         product.setStock(product.getStock() - 1);
         product.setSoldCount(product.getSoldCount() + 1);
-        productMapper.updateById(product);
+        promotionProductMapper.updateById(product);
         return true;
     }
 }

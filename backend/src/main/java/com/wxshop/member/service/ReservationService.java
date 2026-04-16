@@ -20,11 +20,11 @@ public class ReservationService {
     private ReservationMapper reservationMapper;
 
     @Resource
-    private PromotionProductService productService;
+    private PromotionProductService promotionProductService;
 
     @Transactional
     public Reservation createReservation(Long userId, CreateReservationRequest request) {
-        PromotionProduct product = productService.getProductById(request.getProductId());
+        PromotionProduct product = promotionProductService.getProductById(request.getProductId());
         if (product == null) {
             throw new RuntimeException("商品不存在");
         }
@@ -32,7 +32,7 @@ public class ReservationService {
             throw new RuntimeException("库存不足");
         }
 
-        boolean success = productService.decreaseStock(request.getProductId());
+        boolean success = promotionProductService.decreaseStock(request.getProductId());
         if (!success) {
             throw new RuntimeException("库存不足");
         }

@@ -83,7 +83,7 @@
 
     <view class="promo-card" bindtap="goFlashSale">
       <view class="promo-image">
-        <image src="/images/placeholder.png" mode="aspectFill" class="product-image"></image>
+        <view class="product-placeholder"></view>
         <view class="promo-tag">秒杀</view>
       </view>
       <view class="promo-info">

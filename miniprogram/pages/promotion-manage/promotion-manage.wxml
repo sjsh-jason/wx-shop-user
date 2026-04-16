@@ -60,7 +60,7 @@
 
   <!-- 创建/编辑活动弹窗 -->
   <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
-    <view class="modal-content" catchtap="">
+    <view class="modal-content" catchtap="preventBubble">
       <view class="modal-header">
         <text class="modal-title">{{editingId ? '编辑活动' : '创建活动'}}</text>
         <icon type="cancel" size="20" color="#999" bindtap="hideModal"></icon>
@@ -112,7 +112,7 @@
 
   <!-- 商品选择器 -->
   <view class="modal" wx:if="{{showProductPicker}}" catchtap="hideProductPicker">
-    <view class="picker-content" catchtap="">
+    <view class="picker-content" catchtap="preventBubble">
       <view class="picker-header">
         <text class="picker-title">选择商品</text>
         <icon type="cancel" size="20" color="#999" bindtap="hideProductPicker"></icon>

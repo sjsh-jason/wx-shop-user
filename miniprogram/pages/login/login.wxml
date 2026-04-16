@@ -27,8 +27,7 @@
     <button
       class="login-btn {{!agreed ? 'disabled' : ''}}"
       disabled="{{!agreed}}"
-      open-type="getUserInfo"
-      bindgetuserinfo="onGetUserInfo"
+      bindtap="onGetUserInfo"
     >
       微信一键登录
     </button>

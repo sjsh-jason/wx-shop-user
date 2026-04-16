@@ -1,6 +1,7 @@
 <view class="page-container" wx:if="{{reservation}}">
   <view class="product-section">
-    <image src="{{reservation.productImage || '/images/placeholder.png'}}" mode="aspectFill" class="product-image"></image>
+    <view class="product-image-placeholder" wx:if="{{!reservation.productImage}}"></view>
+    <image src="{{reservation.productImage}}" mode="aspectFill" class="product-image" wx:else></image>
     <view class="product-info">
       <text class="product-name">{{reservation.productName}}</text>
       <view class="price-row">
@@ -40,6 +41,6 @@
   </view>
 
   <view class="bottom-bar" wx:if="{{reservation.status === 0}}">
-    <button class="verify-btn" open-type="getUserInfo" bindgetuserinfo="goToScan">商家扫码核销</button>
+    <button class="verify-btn" bindtap="goToScan">商家扫码核销</button>
   </view>
 </view>

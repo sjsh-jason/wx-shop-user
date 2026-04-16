@@ -200,4 +200,8 @@
       </view>
     </view>
   </view>
+
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+  </view>
 </view>
