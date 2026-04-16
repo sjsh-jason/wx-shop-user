@@ -15,7 +15,10 @@
     "pages/exchanged-detail/exchanged-detail",
     "pages/lucky-draw/lucky-draw",
     "pages/prize-manage/prize-manage",
-    "pages/customer-list/customer-list"
+    "pages/customer-list/customer-list",
+    "pages/product-manage/product-manage",
+    "pages/promotion-manage/promotion-manage",
+    "pages/points-product-manage/points-product-manage"
   ],
   "window": {
     "backgroundTextStyle": "light",

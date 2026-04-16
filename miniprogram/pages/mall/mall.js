@@ -67,10 +67,21 @@ Page({
   },
 
   exchangeProduct(e) {
+    console.log('exchangeProduct 被触发', e);
     const product = e.currentTarget.dataset.product;
+    console.log('product:', product);
     const userInfo = this.data.userInfo;
+    console.log('userInfo:', userInfo);
 
-    if (!userInfo || userInfo.points < product.points) {
+    if (!userInfo) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return;
+    }
+
+    if (userInfo.points < product.points) {
       wx.showToast({
         title: '积分不足',
         icon: 'none'
@@ -126,18 +137,8 @@ Page({
     }).catch((err) => {
       wx.hideLoading();
       wx.showToast({
-        title: err.message || '兑换成功',
-        icon: 'success'
-      });
-      this.loadProducts();
-      app.request({
-        url: '/api/user/info',
-        method: 'GET'
-      }).then((userRes) => {
-        app.setUserInfo(userRes);
-        this.setData({
-          userInfo: userRes
-        });
+        title: err.message || '兑换失败，请重试',
+        icon: 'none'
       });
     });
   }

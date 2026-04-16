@@ -28,6 +28,8 @@ public class PromotionProduct {
 
     private LocalDateTime endTime;
 
+    private Long productId;
+
     private Integer status;
 
     @TableField(fill = FieldFill.INSERT)

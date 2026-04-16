@@ -1,44 +1,49 @@
 package com.wxshop.member.controller;
 
 import com.wxshop.member.common.Result;
-import com.wxshop.member.entity.PromotionProduct;
-import com.wxshop.member.service.PromotionProductService;
+import com.wxshop.member.entity.Product;
+import com.wxshop.member.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/promotion")
-public class PromotionProductController {
+@RequestMapping("/api/products")
+public class ProductController {
 
     @Resource
-    private PromotionProductService productService;
+    private ProductService productService;
 
-    @GetMapping("/products")
-    public Result<List<PromotionProduct>> getProducts() {
+    @GetMapping
+    public Result<List<Product>> getProducts(@RequestParam(required = false) String type) {
         try {
-            List<PromotionProduct> products = productService.getActiveProducts();
+            List<Product> products;
+            if (type != null && !type.isEmpty()) {
+                products = productService.getProductsByType(type);
+            } else {
+                products = productService.getAllProducts();
+            }
             return Result.success(products);
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }
     }
 
-    @GetMapping("/products/all")
-    public Result<List<PromotionProduct>> getAllProducts() {
+    @GetMapping("/active")
+    public Result<List<Product>> getActiveProducts() {
         try {
-            List<PromotionProduct> products = productService.getAllProducts();
+            List<Product> products = productService.getActiveProducts();
             return Result.success(products);
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }
     }
 
-    @GetMapping("/products/{id}")
-    public Result<PromotionProduct> getProductDetail(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public Result<Product> getProductDetail(@PathVariable Long id) {
         try {
-            PromotionProduct product = productService.getProductById(id);
+            Product product = productService.getProductById(id);
             if (product == null) {
                 return Result.error("商品不存在");
             }
@@ -48,28 +53,28 @@ public class PromotionProductController {
         }
     }
 
-    @PostMapping("/products")
-    public Result<PromotionProduct> createProduct(@RequestBody PromotionProduct product) {
+    @PostMapping
+    public Result<Product> createProduct(@RequestBody Product product) {
         try {
-            PromotionProduct created = productService.createProduct(product);
+            Product created = productService.createProduct(product);
             return Result.success(created);
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }
     }
 
-    @PutMapping("/products/{id}")
-    public Result<PromotionProduct> updateProduct(@PathVariable Long id, @RequestBody PromotionProduct product) {
+    @PutMapping("/{id}")
+    public Result<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         try {
             product.setId(id);
-            PromotionProduct updated = productService.updateProduct(product);
+            Product updated = productService.updateProduct(product);
             return Result.success(updated);
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public Result<Void> deleteProduct(@PathVariable Long id) {
         try {
             boolean deleted = productService.deleteProduct(id);
@@ -83,8 +88,8 @@ public class PromotionProductController {
         }
     }
 
-    @PutMapping("/products/{id}/status")
-    public Result<Void> updateStatus(@PathVariable Long id, @RequestBody PromotionProduct product) {
+    @PutMapping("/{id}/status")
+    public Result<Void> updateStatus(@PathVariable Long id, @RequestBody Product product) {
         try {
             boolean updated = productService.updateStatus(id, product.getStatus());
             if (updated) {

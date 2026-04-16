@@ -110,22 +110,49 @@ Page({
           hasDrawn: true
         });
 
-        wx.showModal({
-          title: '恭喜中奖',
-          content: `获得：${res.prizeName}${res.points ? ' (' + res.points + '积分)' : ''}`,
-          showCancel: false,
-          success: () => {
-            this.loadMyDraws();
-            if (res.points > 0) {
-              app.request({
-                url: '/api/user/info',
-                method: 'GET'
-              }).then((userRes) => {
-                app.setUserInfo(userRes);
-              });
+        this.loadMyDraws();
+
+        // 判断奖品类型
+        if (res.prizeType === 'points' || res.points > 0) {
+          // 积分奖励：自动到账
+          wx.showModal({
+            title: '恭喜中奖',
+            content: `获得：${res.prizeName}${res.points ? ' (' + res.points + '积分)' : ''}`,
+            showCancel: false,
+            success: () => {
+              if (res.points > 0) {
+                app.request({
+                  url: '/api/user/info',
+                  method: 'GET'
+                }).then((userRes) => {
+                  app.setUserInfo(userRes);
+                });
+              }
             }
-          }
-        });
+          });
+        } else if (res.prizeType === 'product' || res.prizeType === 'coupon') {
+          // 实物商品或代金券：跳转到领取详情页
+          wx.showModal({
+            title: '恭喜中奖',
+            content: `获得：${res.prizeName}，请前往领取`,
+            showCancel: false,
+            confirmText: '去领取',
+            success: () => {
+              if (res.exchangeRecordId) {
+                wx.redirectTo({
+                  url: '/pages/exchanged-detail/exchanged-detail?id=' + res.exchangeRecordId
+                });
+              }
+            }
+          });
+        } else {
+          // 谢谢参与
+          wx.showModal({
+            title: '抽奖结果',
+            content: res.prizeName || '谢谢参与',
+            showCancel: false
+          });
+        }
       });
     }).catch((err) => {
       this.setData({

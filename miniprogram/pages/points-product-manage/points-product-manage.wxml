@@ -1,0 +1,115 @@
+<view class="page-container">
+  <view class="header-section">
+    <view class="add-btn" bindtap="showAddModal">
+      <icon type="waiting" size="16" color="#ffffff"></icon>
+      <text>添加积分商品</text>
+    </view>
+  </view>
+
+  <view class="product-list" wx:if="{{!loading}}">
+    <view wx:if="{{products.length > 0}}">
+      <view
+        wx:for="{{products}}"
+        wx:key="id"
+        class="product-card"
+      >
+        <view class="product-image-wrapper">
+          <image class="product-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+          <view class="image-placeholder" wx:else>
+            <text class="placeholder-text">{{item.name ? item.name.charAt(0) : '积'}}</text>
+          </view>
+        </view>
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
+          <view class="product-meta">
+            <text class="product-points">{{item.points}} 积分</text>
+            <text class="product-stock">库存: {{item.stock}} / 已兑: {{item.exchangedCount}}</text>
+          </view>
+          <view class="product-actions">
+            <view class="action-btn action-edit" bindtap="editProduct" data-id="{{item.id}}">
+              <icon type="info" size="14" color="#FF6B00"></icon>
+              <text>编辑</text>
+            </view>
+            <view class="switch-wrapper">
+              <switch
+                checked="{{item.status === 1}}"
+                bindchange="toggleStatus"
+                data-id="{{item.id}}"
+                color="#FF6B00"
+              />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty">
+      <icon type="waiting" size="64" color="#ddd"></icon>
+      <text class="empty-text">暂无积分商品</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 添加/编辑积分商品弹窗 -->
+  <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <text class="modal-title">{{editingId ? '编辑积分商品' : '添加积分商品'}}</text>
+        <icon type="cancel" size="20" color="#999" bindtap="hideModal"></icon>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">选择商品</text>
+          <view class="product-selector" bindtap="showProductPicker">
+            <text wx:if="{{selectedProduct}}" class="selected-product">{{selectedProduct.name}}</text>
+            <text wx:else class="placeholder">请选择商品</text>
+            <icon type="info" size="16" color="#999"></icon>
+          </view>
+        </view>
+        <view class="form-item">
+          <text class="form-label">商品名称</text>
+          <input class="form-input" placeholder="请输入商品名称" value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">所需积分</text>
+          <input class="form-input" type="number" placeholder="请输入所需积分" value="{{formData.points}}" bindinput="onInputChange" data-field="points" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">库存数量</text>
+          <input class="form-input" type="number" placeholder="请输入库存数量" value="{{formData.stock}}" bindinput="onInputChange" data-field="stock" />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn modal-btn-cancel" bindtap="hideModal">取消</view>
+        <view class="modal-btn modal-btn-confirm" bindtap="saveProduct">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品选择器 -->
+  <view class="modal" wx:if="{{showProductPicker}}" catchtap="hideProductPicker">
+    <view class="picker-content" catchtap="">
+      <view class="picker-header">
+        <text class="picker-title">选择商品</text>
+        <icon type="cancel" size="20" color="#999" bindtap="hideProductPicker"></icon>
+      </view>
+      <view class="picker-body">
+        <view
+          wx:for="{{sourceProducts}}"
+          wx:key="id"
+          class="product-option {{selectedProduct && selectedProduct.id === item.id ? 'active' : ''}}"
+          data-product="{{item}}"
+          bindtap="selectProduct"
+        >
+          <view class="option-info">
+            <text class="option-name">{{item.name}}</text>
+            <text class="option-type">{{getTypeText(item.type)}}</text>
+          </view>
+          <icon wx:if="{{selectedProduct && selectedProduct.id === item.id}}" type="success" size="20" color="#FF6B00"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

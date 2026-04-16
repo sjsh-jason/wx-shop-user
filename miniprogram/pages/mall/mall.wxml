@@ -33,8 +33,6 @@
         wx:for="{{products}}"
         wx:key="id"
         class="product-card"
-        data-product="{{item}}"
-        bindtap="exchangeProduct"
       >
         <view class="product-image-wrapper">
           <image class="product-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
@@ -51,7 +49,11 @@
               <text class="points-num">{{item.points}}</text>
               <text class="points-unit">积分</text>
             </view>
-            <view class="exchange-btn {{item.stock <= 0 ? 'disabled' : ''}}">
+            <view
+              class="exchange-btn {{item.stock <= 0 ? 'disabled' : ''}}"
+              data-product="{{item}}"
+              bindtap="exchangeProduct"
+            >
               {{item.stock > 0 ? '立即兑换' : '已抢光'}}
             </view>
           </view>

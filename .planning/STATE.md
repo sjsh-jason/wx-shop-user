@@ -1,9 +1,9 @@
 # 项目状态
 
 ## 当前状态
-- **当前阶段**: Phase 4 已完成
-- **当前里程碑**: 幸运抽奖 & 完善 - 完整交付
-- **最后更新**: 2026-04-15
+- **当前阶段**: Phase 6 已完成
+- **当前里程碑**: 商品中心完善与 Bug 修复迭代
+- **最后更新**: 2026-04-16
 
 ## 已完成
 - ✅ 需求调研与确认
@@ -41,12 +41,27 @@
   - 商家端奖品管理页面（pages/prize-manage）
   - 商家端客户列表页面（pages/customer-list）
   - app.json 更新添加所有新页面路由
+- ✅ Phase 5 商品中心完善与积分商品管理完整交付
+  - 修复后端实体类 `PromotionProduct`、`PointsProduct` 的 `productId` 字段缺失
+  - 修复促销活动管理页面编辑时的商品回显 Bug
+  - 创建积分商品管理页面（pages/points-product-manage）
+  - 更新商家管理入口（profile 页面添加积分商品管理入口）
+  - 后端编译验证通过
+- ✅ Phase 6 Bug 修复与功能完善完整交付
+  - 验证积分商城页面功能正常
+  - 验证首页"查看全部"跳转到限时秒杀页面
+  - 验证"立即抢购"按钮功能完整
+  - 修改抽奖页面，支持奖品类型判断和领取跳转
+  - 确认首页快捷入口已为"限时秒杀"
+  - 确认"每日签到"入口在个人中心保留
+  - 确认拼团功能已记录到后续待实现需求
+  - 后端编译验证通过
 
 ## 进行中
-- 无 - 所有阶段已完成
+- 无
 
 ## 待开始
-- 无 - 所有规划阶段已完成
+- 无（所有规划阶段已完成）
 
 ## Phase 1 已交付文件
 
@@ -129,12 +144,30 @@
 - `miniprogram/pages/profile/*` - 个人中心（已更新，添加抽奖入口）
 - `miniprogram/app.json` - 小程序配置（已更新，添加所有新页面路由）
 
+## Phase 5 已交付文件
+
+### 后端修改
+- `backend/src/main/java/com/wxshop/member/entity/PromotionProduct.java` - 新增 `productId` 字段
+- `backend/src/main/java/com/wxshop/member/entity/PointsProduct.java` - 新增 `productId` 字段
+- `backend/src/main/java/com/wxshop/member/controller/ProductController.java` - 商品中心 Controller
+- `backend/src/main/java/com/wxshop/member/entity/Product.java` - 商品中心实体
+- `backend/src/main/java/com/wxshop/member/mapper/ProductMapper.java` - 商品中心 Mapper
+- `backend/src/main/java/com/wxshop/member/service/ProductService.java` - 商品中心 Service
+- `backend/src/main/resources/db/migration_product.sql` - 商品表迁移脚本
+
+### 前端新增/修改
+- `miniprogram/pages/product-manage/*` - 商品管理页面
+- `miniprogram/pages/promotion-manage/*` - 促销活动管理页面（修复编辑回显）
+- `miniprogram/pages/points-product-manage/*` - 积分商品管理页面（新增）
+- `miniprogram/pages/profile/*` - 个人中心（新增积分商品管理入口）
+- `miniprogram/app.json` - 注册新页面路由
+
 ## 风险与问题
 - 微信 appid 和 secret 需要在 application.yml 中配置
 - 需要先创建数据库并执行 schema.sql 初始化
+- Phase 6 涉及较多前端页面修复，需逐项验证交互流程
 
 ## 项目完成总结
-所有规划阶段已完成交付！
 
 **Phase 1 - 项目初始化与基础框架** ✅
 - 搭建小程序基础架构，实现登录注册
@@ -148,4 +181,8 @@
 **Phase 4 - 幸运抽奖 & 完善** ✅
 - 实现九宫格幸运抽奖功能，完善商家端管理，整体优化体验
 
-项目已完整交付！
+**Phase 5 - 商品中心完善与积分商品管理** ✅
+- 修复商品中心数据一致性问题，完善 B 端商品管理能力
+
+**Phase 6 - Bug 修复与功能完善** ✅
+- 修复现有功能的 Bug，完善用户体验

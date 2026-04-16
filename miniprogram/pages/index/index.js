@@ -35,8 +35,38 @@ Page({
   },
 
   navTo(e) {
+    console.log('navTo 被触发', e);
     const url = e.currentTarget.dataset.url;
-    wx.navigateTo({ url });
+    console.log('跳转 URL:', url);
+    if (url) {
+      // 检查是否是 TabBar 页面
+      const tabBarPages = ['/pages/index/index', '/pages/mall/mall', '/pages/coupons/coupons', '/pages/profile/profile'];
+      if (tabBarPages.includes(url)) {
+        wx.switchTab({
+          url,
+          fail: (err) => {
+            console.error('switchTab 跳转失败:', err);
+            wx.showToast({
+              title: '跳转失败',
+              icon: 'none'
+            });
+          }
+        });
+      } else {
+        wx.navigateTo({
+          url,
+          fail: (err) => {
+            console.error('navigateTo 跳转失败:', err);
+            wx.showToast({
+              title: '跳转失败',
+              icon: 'none'
+            });
+          }
+        });
+      }
+    } else {
+      console.error('URL 为空');
+    }
   },
 
   goFlashSale() {

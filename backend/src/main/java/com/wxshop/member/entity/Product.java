@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("points_product")
-public class PointsProduct {
+@TableName("product")
+public class Product {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -16,17 +16,13 @@ public class PointsProduct {
 
     private String image;
 
-    private Integer points;
+    private String description;
+
+    private String type;
 
     private BigDecimal price;
 
-    private String category;
-
     private Integer stock;
-
-    private Integer exchangedCount;
-
-    private Long productId;
 
     private Integer status;
 

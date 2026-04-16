@@ -78,5 +78,23 @@ Page({
     wx.navigateTo({
       url: '/pages/customer-list/customer-list'
     });
+  },
+
+  goToProductManage() {
+    wx.navigateTo({
+      url: '/pages/product-manage/product-manage'
+    });
+  },
+
+  goToPromotionManage() {
+    wx.navigateTo({
+      url: '/pages/promotion-manage/promotion-manage'
+    });
+  },
+
+  goToPointsProductManage() {
+    wx.navigateTo({
+      url: '/pages/points-product-manage/points-product-manage'
+    });
   }
 });

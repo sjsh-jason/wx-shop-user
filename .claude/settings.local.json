@@ -27,7 +27,11 @@
       "Bash(mysql:*)",
       "Bash(rtk mysql:*)",
       "Bash(xargs ls:*)",
-      "Bash(rtk git *)"
+      "Bash(rtk git *)",
+      "Skill(gsd-help)",
+      "Skill(gsd-add-phase)",
+      "Skill(gsd-discuss-phase)",
+      "Bash(mvn compile *)"
     ]
   },
   "enableAllProjectMcpServers": true,

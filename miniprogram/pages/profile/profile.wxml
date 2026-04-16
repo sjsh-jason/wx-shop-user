@@ -66,6 +66,36 @@
         </view>
         <icon type="info" size="16" color="#CCCCCC"></icon>
       </view>
+
+      <view class="menu-item" bindtap="goToProductManage">
+        <view class="menu-left">
+          <view class="menu-icon icon-merchant">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">商品管理</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="goToPromotionManage">
+        <view class="menu-left">
+          <view class="menu-icon icon-merchant">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">促销活动管理</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="goToPointsProductManage">
+        <view class="menu-left">
+          <view class="menu-icon icon-merchant">
+            <icon type="waiting" size="20"></icon>
+          </view>
+          <text class="menu-text">积分商品管理</text>
+        </view>
+        <icon type="info" size="16" color="#CCCCCC"></icon>
+      </view>
     </view>
   </view>
 

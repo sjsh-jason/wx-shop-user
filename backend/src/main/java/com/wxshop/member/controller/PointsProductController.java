@@ -30,6 +30,16 @@ public class PointsProductController {
         }
     }
 
+    @GetMapping("/products/all")
+    public Result<List<PointsProduct>> getAllProducts() {
+        try {
+            List<PointsProduct> products = pointsProductService.getAllProducts();
+            return Result.success(products);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
     @GetMapping("/products/{id}")
     public Result<PointsProduct> getProductDetail(@PathVariable Long id) {
         try {
@@ -38,6 +48,55 @@ public class PointsProductController {
                 return Result.error("商品不存在");
             }
             return Result.success(product);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @PostMapping("/products")
+    public Result<PointsProduct> createProduct(@RequestBody PointsProduct product) {
+        try {
+            PointsProduct created = pointsProductService.createProduct(product);
+            return Result.success(created);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @PutMapping("/products/{id}")
+    public Result<PointsProduct> updateProduct(@PathVariable Long id, @RequestBody PointsProduct product) {
+        try {
+            product.setId(id);
+            PointsProduct updated = pointsProductService.updateProduct(product);
+            return Result.success(updated);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/products/{id}")
+    public Result<Void> deleteProduct(@PathVariable Long id) {
+        try {
+            boolean deleted = pointsProductService.deleteProduct(id);
+            if (deleted) {
+                return Result.success();
+            } else {
+                return Result.error("删除失败");
+            }
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @PutMapping("/products/{id}/status")
+    public Result<Void> updateStatus(@PathVariable Long id, @RequestBody PointsProduct product) {
+        try {
+            boolean updated = pointsProductService.updateStatus(id, product.getStatus());
+            if (updated) {
+                return Result.success();
+            } else {
+                return Result.error("更新失败");
+            }
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }

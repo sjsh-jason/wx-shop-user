@@ -31,8 +31,37 @@ public class PointsProductService {
         return pointsProductMapper.selectList(wrapper);
     }
 
+    public List<PointsProduct> getAllProducts() {
+        LambdaQueryWrapper<PointsProduct> wrapper = new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(PointsProduct::getCreateTime);
+        return pointsProductMapper.selectList(wrapper);
+    }
+
     public PointsProduct getProductById(Long id) {
         return pointsProductMapper.selectById(id);
+    }
+
+    public PointsProduct createProduct(PointsProduct product) {
+        product.setStatus(1);
+        product.setExchangedCount(0);
+        pointsProductMapper.insert(product);
+        return product;
+    }
+
+    public PointsProduct updateProduct(PointsProduct product) {
+        pointsProductMapper.updateById(product);
+        return product;
+    }
+
+    public boolean deleteProduct(Long id) {
+        return pointsProductMapper.deleteById(id) > 0;
+    }
+
+    public boolean updateStatus(Long id, Integer status) {
+        PointsProduct product = new PointsProduct();
+        product.setId(id);
+        product.setStatus(status);
+        return pointsProductMapper.updateById(product) > 0;
     }
 
     public boolean decreaseStock(Long productId) {

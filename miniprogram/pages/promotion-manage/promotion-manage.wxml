@@ -1,0 +1,137 @@
+<view class="page-container">
+  <view class="header-section">
+    <view class="add-btn" bindtap="showAddModal">
+      <icon type="waiting" size="16" color="#ffffff"></icon>
+      <text>创建活动</text>
+    </view>
+  </view>
+
+  <view class="activity-list" wx:if="{{!loading}}">
+    <view wx:if="{{activities.length > 0}}">
+      <view
+        wx:for="{{activities}}"
+        wx:key="id"
+        class="activity-card"
+      >
+        <view class="activity-image-wrapper">
+          <image class="activity-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+          <view class="image-placeholder" wx:else>
+            <text class="placeholder-text">促</text>
+          </view>
+        </view>
+        <view class="activity-info">
+          <text class="activity-name">{{item.name}}</text>
+          <view class="activity-meta">
+            <text class="activity-price">¥{{item.promotionPrice}}</text>
+            <text class="activity-original">¥{{item.originalPrice}}</text>
+          </view>
+          <view class="activity-stock">
+            <text>库存: {{item.stock}} / 已售: {{item.soldCount}}</text>
+          </view>
+          <view class="activity-time">
+            <text>{{item.startTime}} - {{item.endTime}}</text>
+          </view>
+          <view class="activity-actions">
+            <view class="action-btn action-edit" bindtap="editActivity" data-id="{{item.id}}">
+              <icon type="info" size="14" color="#FF6B00"></icon>
+              <text>编辑</text>
+            </view>
+            <view class="switch-wrapper">
+              <switch
+                checked="{{item.status === 1}}"
+                bindchange="toggleStatus"
+                data-id="{{item.id}}"
+                color="#FF6B00"
+              />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty">
+      <icon type="waiting" size="64" color="#ddd"></icon>
+      <text class="empty-text">暂无促销活动</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 创建/编辑活动弹窗 -->
+  <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <text class="modal-title">{{editingId ? '编辑活动' : '创建活动'}}</text>
+        <icon type="cancel" size="20" color="#999" bindtap="hideModal"></icon>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">选择商品</text>
+          <view class="product-selector" bindtap="showProductPicker">
+            <text wx:if="{{selectedProduct}}" class="selected-product">{{selectedProduct.name}}</text>
+            <text wx:else class="placeholder">请选择商品</text>
+            <icon type="info" size="16" color="#999"></icon>
+          </view>
+        </view>
+        <view class="form-item">
+          <text class="form-label">活动名称</text>
+          <input class="form-input" placeholder="请输入活动名称" value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">原价</text>
+          <input class="form-input" type="digit" placeholder="请输入原价" value="{{formData.originalPrice}}" bindinput="onInputChange" data-field="originalPrice" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">促销价</text>
+          <input class="form-input" type="digit" placeholder="请输入促销价" value="{{formData.promotionPrice}}" bindinput="onInputChange" data-field="promotionPrice" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">活动库存</text>
+          <input class="form-input" type="number" placeholder="请输入活动库存" value="{{formData.stock}}" bindinput="onInputChange" data-field="stock" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">开始时间</text>
+          <picker mode="date" value="{{formData.startDate}}" bindchange="onDateChange" data-field="startDate">
+            <view class="picker">{{formData.startDate || '请选择开始日期'}}</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="form-label">结束时间</text>
+          <picker mode="date" value="{{formData.endDate}}" bindchange="onDateChange" data-field="endDate">
+            <view class="picker">{{formData.endDate || '请选择结束日期'}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn modal-btn-cancel" bindtap="hideModal">取消</view>
+        <view class="modal-btn modal-btn-confirm" bindtap="saveActivity">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品选择器 -->
+  <view class="modal" wx:if="{{showProductPicker}}" catchtap="hideProductPicker">
+    <view class="picker-content" catchtap="">
+      <view class="picker-header">
+        <text class="picker-title">选择商品</text>
+        <icon type="cancel" size="20" color="#999" bindtap="hideProductPicker"></icon>
+      </view>
+      <view class="picker-body">
+        <view
+          wx:for="{{products}}"
+          wx:key="id"
+          class="product-option {{selectedProduct && selectedProduct.id === item.id ? 'active' : ''}}"
+          data-product="{{item}}"
+          bindtap="selectProduct"
+        >
+          <view class="option-info">
+            <text class="option-name">{{item.name}}</text>
+            <text class="option-type">{{getTypeText(item.type)}}</text>
+          </view>
+          <icon wx:if="{{selectedProduct && selectedProduct.id === item.id}}" type="success" size="20" color="#FF6B00"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,116 @@
+<view class="page-container">
+  <view class="header-section">
+    <view class="tabs">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="key"
+        class="tab-item {{currentTab === item.key ? 'active' : ''}}"
+        data-tab="{{item.key}}"
+        bindtap="switchTab"
+      >
+        {{item.name}}
+      </view>
+    </view>
+    <view class="add-btn" bindtap="showAddModal">
+      <icon type="waiting" size="16" color="#ffffff"></icon>
+      <text>添加商品</text>
+    </view>
+  </view>
+
+  <view class="product-list" wx:if="{{!loading}}">
+    <view wx:if="{{products.length > 0}}">
+      <view
+        wx:for="{{products}}"
+        wx:key="id"
+        class="product-card"
+      >
+        <view class="product-image-wrapper">
+          <image class="product-image" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+          <view class="image-placeholder" wx:else>
+            <text class="placeholder-text">{{item.name ? item.name.charAt(0) : '商'}}</text>
+          </view>
+        </view>
+        <view class="product-info">
+          <view class="product-header">
+            <text class="product-name">{{item.name}}</text>
+            <view class="type-badge type-{{item.type}}">
+              {{getTypeText(item.type)}}
+            </view>
+          </view>
+          <view class="product-meta">
+            <text class="product-price" wx:if="{{item.price}}">¥{{item.price}}</text>
+            <text class="product-stock">库存: {{item.stock}}</text>
+          </view>
+          <view class="product-actions">
+            <view class="action-btn action-edit" bindtap="editProduct" data-id="{{item.id}}">
+              <icon type="info" size="14" color="#FF6B00"></icon>
+              <text>编辑</text>
+            </view>
+            <view class="switch-wrapper">
+              <switch
+                checked="{{item.status === 1}}"
+                bindchange="toggleStatus"
+                data-id="{{item.id}}"
+                color="#FF6B00"
+              />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty">
+      <icon type="waiting" size="64" color="#ddd"></icon>
+      <text class="empty-text">暂无商品</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 添加/编辑商品弹窗 -->
+  <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <text class="modal-title">{{editingId ? '编辑商品' : '添加商品'}}</text>
+        <icon type="cancel" size="20" color="#999" bindtap="hideModal"></icon>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">商品名称</text>
+          <input class="form-input" placeholder="请输入商品名称" value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">商品类型</text>
+          <view class="type-selector">
+            <view
+              wx:for="{{typeOptions}}"
+              wx:key="key"
+              class="type-option {{formData.type === item.key ? 'active' : ''}}"
+              data-type="{{item.key}}"
+              bindtap="selectType"
+            >
+              {{item.name}}
+            </view>
+          </view>
+        </view>
+        <view class="form-item">
+          <text class="form-label">商品价格</text>
+          <input class="form-input" type="digit" placeholder="请输入商品价格" value="{{formData.price}}" bindinput="onInputChange" data-field="price" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">库存数量</text>
+          <input class="form-input" type="number" placeholder="请输入库存数量" value="{{formData.stock}}" bindinput="onInputChange" data-field="stock" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">商品描述</text>
+          <textarea class="form-textarea" placeholder="请输入商品描述" value="{{formData.description}}" bindinput="onInputChange" data-field="description" />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn modal-btn-cancel" bindtap="hideModal">取消</view>
+        <view class="modal-btn modal-btn-confirm" bindtap="saveProduct">保存</view>
+      </view>
+    </view>
+  </view>
+</view>
