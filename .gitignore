@@ -33,6 +33,7 @@ buildNumber.properties
 
 # WeChat Mini Program
 project.private.config.json
+miniprogram/.cloudbase/
 
 # Node
 node_modules/

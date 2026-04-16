@@ -242,6 +242,15 @@
   color: #333;
 }
 
+.datetime-picker {
+  display: flex;
+  gap: 16rpx;
+}
+
+.picker-half {
+  flex: 1;
+}
+
 .product-selector {
   width: 100%;
   height: 80rpx;
@@ -347,4 +356,42 @@
 .option-type {
   font-size: 22rpx;
   color: #999999;
+}
+
+.time-picker {
+  cursor: pointer;
+}
+
+.time-picker-content {
+  width: 600rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx;
+  border-bottom: 2rpx solid #F0F0F0;
+  flex-shrink: 0;
+}
+
+.time-picker-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.time-picker-btn {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.time-picker-confirm {
+  color: #FF6B00;
+  font-weight: 500;
 }

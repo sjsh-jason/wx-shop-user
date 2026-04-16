@@ -7,8 +7,14 @@ Page({
     loading: true,
     showModal: false,
     showProductPicker: false,
+    showTimePickerModal: false,
     editingId: null,
     selectedProduct: null,
+    timePickerField: null,
+    timePickerValue: [0, 0, 0],
+    hours: [],
+    minutes: [],
+    seconds: [],
     formData: {
       productId: null,
       name: '',
@@ -16,17 +22,34 @@ Page({
       promotionPrice: '',
       stock: '',
       startDate: '',
-      endDate: ''
+      startTime: '00:00:00',
+      endDate: '',
+      endTime: '23:59:59'
     }
   },
 
   onLoad() {
+    this.initTimePickerData();
     this.loadActivities();
     this.loadProducts();
   },
 
   onShow() {
     this.loadActivities();
+  },
+
+  initTimePickerData() {
+    const hours = [];
+    const minutes = [];
+    const seconds = [];
+    for (let i = 0; i < 24; i++) {
+      hours.push(i.toString().padStart(2, '0'));
+    }
+    for (let i = 0; i < 60; i++) {
+      minutes.push(i.toString().padStart(2, '0'));
+      seconds.push(i.toString().padStart(2, '0'));
+    }
+    this.setData({ hours, minutes, seconds });
   },
 
   loadActivities() {
@@ -84,7 +107,9 @@ Page({
         promotionPrice: '',
         stock: '',
         startDate: '',
-        endDate: ''
+        startTime: '00:00:00',
+        endDate: '',
+        endTime: '23:59:59'
       }
     });
   },
@@ -107,7 +132,9 @@ Page({
           promotionPrice: activity.promotionPrice || '',
           stock: activity.stock || '',
           startDate: activity.startTime ? activity.startTime.split(' ')[0] : '',
-          endDate: activity.endTime ? activity.endTime.split(' ')[0] : ''
+          startTime: activity.startTime ? activity.startTime.split(' ')[1] || '00:00:00' : '00:00:00',
+          endDate: activity.endTime ? activity.endTime.split(' ')[0] : '',
+          endTime: activity.endTime ? activity.endTime.split(' ')[1] || '23:59:59' : '23:59:59'
         }
       });
     }
@@ -123,6 +150,39 @@ Page({
 
   hideProductPicker() {
     this.setData({ showProductPicker: false });
+  },
+
+  showTimePicker(e) {
+    const field = e.currentTarget.dataset.field;
+    const timeStr = this.data.formData[field] || '00:00:00';
+    const parts = timeStr.split(':');
+    const hour = parseInt(parts[0] || '0');
+    const minute = parseInt(parts[1] || '0');
+    const second = parseInt(parts[2] || '0');
+    this.setData({
+      showTimePickerModal: true,
+      timePickerField: field,
+      timePickerValue: [hour, minute, second]
+    });
+  },
+
+  hideTimePicker() {
+    this.setData({ showTimePickerModal: false });
+  },
+
+  onTimePickerChange(e) {
+    this.setData({
+      timePickerValue: e.detail.value
+    });
+  },
+
+  confirmTimePicker() {
+    const { timePickerField, timePickerValue, hours, minutes, seconds } = this.data;
+    const timeStr = `${hours[timePickerValue[0]]}:${minutes[timePickerValue[1]]}:${seconds[timePickerValue[2]]}`;
+    this.setData({
+      [`formData.${timePickerField}`]: timeStr,
+      showTimePickerModal: false
+    });
   },
 
   preventBubble() {
@@ -175,7 +235,7 @@ Page({
       return;
     }
 
-    if (!formData.startDate || !formData.endDate) {
+    if (!formData.startDate || !formData.startTime || !formData.endDate || !formData.endTime) {
       wx.showToast({
         title: '请选择活动时间',
         icon: 'none'
@@ -191,8 +251,8 @@ Page({
       originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
       promotionPrice: parseFloat(formData.promotionPrice),
       stock: formData.stock ? parseInt(formData.stock) : 0,
-      startTime: formData.startDate + ' 00:00:00',
-      endTime: formData.endDate + ' 23:59:59'
+      startTime: formData.startDate + ' ' + formData.startTime,
+      endTime: formData.endDate + ' ' + formData.endTime
     };
 
     const request = editingId
