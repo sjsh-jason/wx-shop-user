@@ -2,34 +2,76 @@ const app = getApp();
 
 Page({
   data: {
+    activityTitle: '幸运大抽奖',
     prizes: [],
-    myDraws: [],
+    remainingCount: 0,
+    remainingTime: 0,
     currentIndex: -1,
     isRunning: false,
-    hasDrawn: false,
-    targetIndex: -1
+    targetIndex: -1,
+    ruleContent: ''
   },
 
   onLoad() {
+    this.loadActivityConfig();
     this.loadPrizes();
-    this.loadDrawStatus();
-    this.loadMyDraws();
+    this.loadChanceStatus();
   },
 
   onShow() {
-    this.loadDrawStatus();
+    this.loadChanceStatus();
+  },
+
+  loadActivityConfig() {
+    app.request({
+      url: '/api/draw/activity/config',
+      method: 'GET'
+    }).then((res) => {
+      if (res) {
+        this.setData({
+          activityTitle: res.title || '幸运大抽奖',
+          ruleContent: res.ruleContent || ''
+        });
+        if (res.endTime) {
+          this.startCountdown(new Date(res.endTime.replace(/-/g, '/')).getTime());
+        }
+      }
+    }).catch(() => {
+    });
+  },
+
+  startCountdown(endTime) {
+    const updateCountdown = () => {
+      const now = Date.now();
+      const diff = endTime - now;
+      if (diff <= 0) {
+        this.setData({ remainingTime: 0 });
+        return;
+      }
+      this.setData({ remainingTime: diff });
+      setTimeout(updateCountdown, 1000);
+    };
+    updateCountdown();
+  },
+
+  formatCountdown(ms) {
+    const seconds = Math.floor(ms / 1000);
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   },
 
   loadPrizes() {
     this.setData({
       prizes: [
-        { id: 1, name: '免费饮品', iconText: '饮' },
-        { id: 2, name: '200积分', iconText: '200' },
-        { id: 3, name: '¥10代金券', iconText: '¥10' },
-        { id: 4, name: '50积分', iconText: '50' },
-        { id: 5, name: '招牌菜', iconText: '菜' },
-        { id: 6, name: '¥50大额券', iconText: '¥50' },
-        { id: 7, name: '500积分', iconText: '500' },
+        { id: 1, name: '招牌三合一（特大份）', iconText: '特' },
+        { id: 2, name: '招牌三合一（中份）', iconText: '中' },
+        { id: 3, name: '香酥鸡柳（中份）', iconText: '鸡' },
+        { id: 4, name: '全场通用5元券', iconText: '¥5' },
+        { id: 5, name: '300积分', iconText: '300' },
+        { id: 6, name: '250积分', iconText: '250' },
+        { id: 7, name: '200积分', iconText: '200' },
         { id: 8, name: '谢谢参与', iconText: '谢' }
       ]
     });
@@ -56,36 +98,29 @@ Page({
     if (prize.type === 3 && prize.couponValue) {
       return '¥' + prize.couponValue;
     }
-    const icons = ['饮', '积', '券', '积', '菜', '券', '积', '谢'];
+    const icons = ['特', '中', '鸡', '券', '积', '积', '积', '谢'];
     return icons[index % 8];
   },
 
-  loadDrawStatus() {
+  loadChanceStatus() {
     app.request({
-      url: '/api/lucky-draw/status',
+      url: '/api/draw/chance/status',
       method: 'GET'
     }).then((res) => {
       this.setData({
-        hasDrawn: res.hasDrawn || false
-      });
-    }).catch(() => {
-    });
-  },
-
-  loadMyDraws() {
-    app.request({
-      url: '/api/lucky-draw/my',
-      method: 'GET'
-    }).then((res) => {
-      this.setData({
-        myDraws: res || []
+        remainingCount: res.remainingCount || 0
       });
     }).catch(() => {
     });
   },
 
   startDraw() {
-    if (this.data.isRunning || this.data.hasDrawn) {
+    if (this.data.isRunning) {
+      return;
+    }
+
+    if (this.data.remainingCount <= 0) {
+      this.showNoChanceModal();
       return;
     }
 
@@ -106,53 +141,11 @@ Page({
 
       this.runAnimation(() => {
         this.setData({
-          isRunning: false,
-          hasDrawn: true
+          isRunning: false
         });
 
-        this.loadMyDraws();
-
-        // 判断奖品类型
-        if (res.prizeType === 'points' || res.points > 0) {
-          // 积分奖励：自动到账
-          wx.showModal({
-            title: '恭喜中奖',
-            content: `获得：${res.prizeName}${res.points ? ' (' + res.points + '积分)' : ''}`,
-            showCancel: false,
-            success: () => {
-              if (res.points > 0) {
-                app.request({
-                  url: '/api/user/info',
-                  method: 'GET'
-                }).then((userRes) => {
-                  app.setUserInfo(userRes);
-                });
-              }
-            }
-          });
-        } else if (res.prizeType === 'product' || res.prizeType === 'coupon') {
-          // 实物商品或代金券：跳转到领取详情页
-          wx.showModal({
-            title: '恭喜中奖',
-            content: `获得：${res.prizeName}，请前往领取`,
-            showCancel: false,
-            confirmText: '去领取',
-            success: () => {
-              if (res.exchangeRecordId) {
-                wx.redirectTo({
-                  url: '/pages/exchanged-detail/exchanged-detail?id=' + res.exchangeRecordId
-                });
-              }
-            }
-          });
-        } else {
-          // 谢谢参与
-          wx.showModal({
-            title: '抽奖结果',
-            content: res.prizeName || '谢谢参与',
-            showCancel: false
-          });
-        }
+        this.loadChanceStatus();
+        this.showResultModal(res);
       });
     }).catch((err) => {
       this.setData({
@@ -162,6 +155,50 @@ Page({
         title: err.message || '抽奖失败',
         icon: 'none'
       });
+    });
+  },
+
+  showNoChanceModal() {
+    wx.showModal({
+      title: '抽奖次数不足',
+      content: '去消费或签到获取更多抽奖机会',
+      confirmText: '去消费',
+      cancelText: '去签到',
+      success: (res) => {
+        if (res.confirm) {
+          wx.switchTab({
+            url: '/pages/index/index'
+          });
+        } else {
+          wx.navigateTo({
+            url: '/pages/check-in/check-in'
+          });
+        }
+      }
+    });
+  },
+
+  showResultModal(draw) {
+    const prize = this.data.prizes.find(p => p.id === draw.prizeId);
+    let content = `获得：${draw.prizeName}`;
+    if (prize && prize.description) {
+      content += `\n${prize.description}`;
+    }
+
+    wx.showModal({
+      title: draw.prizeType === 0 ? '抽奖结果' : '恭喜中奖',
+      content: content,
+      showCancel: false,
+      success: () => {
+        if (draw.prizeType === 1 && draw.points > 0) {
+          app.request({
+            url: '/api/user/info',
+            method: 'GET'
+          }).then((userRes) => {
+            app.setUserInfo(userRes);
+          });
+        }
+      }
     });
   },
 
@@ -182,13 +219,15 @@ Page({
     }, currentStep < 16 ? 80 : (currentStep < 20 ? 120 : 200));
   },
 
-  formatTime(timeStr) {
-    if (!timeStr) return '';
-    const date = new Date(timeStr.replace(/-/g, '/'));
-    const m = (date.getMonth() + 1).toString().padStart(2, '0');
-    const d = date.getDate().toString().padStart(2, '0');
-    const h = date.getHours().toString().padStart(2, '0');
-    const min = date.getMinutes().toString().padStart(2, '0');
-    return `${m}-${d} ${h}:${min}`;
+  goToRule() {
+    wx.navigateTo({
+      url: '/pages/draw-rule/draw-rule'
+    });
+  },
+
+  goToRecords() {
+    wx.navigateTo({
+      url: '/pages/draw-records/draw-records'
+    });
   }
 });

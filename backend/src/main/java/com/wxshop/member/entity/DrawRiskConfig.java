@@ -2,37 +2,28 @@ package com.wxshop.member.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("prize")
-public class Prize {
+@TableName("draw_risk_config")
+public class DrawRiskConfig {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private String name;
+    private String configKey;
 
-    private String icon;
+    private String configName;
 
-    private Integer type;
+    private String configType;
 
-    private Integer points;
+    private String configValue;
 
-    private Long productId;
+    private String defaultValue;
 
-    private BigDecimal couponValue;
-
-    private Integer validDays;
+    private String options;
 
     private String description;
-
-    private BigDecimal probability;
-
-    private Integer sortOrder;
-
-    private Integer status;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;

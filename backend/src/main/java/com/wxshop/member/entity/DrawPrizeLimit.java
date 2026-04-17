@@ -5,8 +5,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("lucky_draw")
-public class LuckyDraw {
+@TableName("draw_prize_limit")
+public class DrawPrizeLimit {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -15,21 +15,9 @@ public class LuckyDraw {
 
     private Long prizeId;
 
-    private String prizeName;
+    private Integer prizeLevel;
 
-    private Integer prizeType;
-
-    private Integer points;
-
-    private Integer status;
-
-    private LocalDateTime expireTime;
-
-    private Integer verifyStatus;
-
-    private LocalDateTime verifyTime;
-
-    private String qrCode;
+    private Integer winCount;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;

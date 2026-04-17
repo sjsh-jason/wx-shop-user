@@ -1,0 +1,22 @@
+<view class="page-container">
+  <view class="record-list">
+    <view wx:for="{{records}}" wx:key="id" class="record-item">
+      <view class="record-left">
+        <text class="prize-name">{{item.prizeName}}</text>
+        <text class="prize-time">{{formatTime(item.createTime)}}</text>
+      </view>
+      <view class="record-right">
+        <text class="prize-status {{item.verifyStatus === 0 ? 'unused' : (item.verifyStatus === 1 ? 'used' : 'expired')}}">
+          {{item.verifyStatus === 0 ? '未使用' : (item.verifyStatus === 1 ? '已使用' : '已过期')}}
+        </text>
+        <text class="expire-time" wx:if="{{item.expireTime}}">有效期至: {{formatDate(item.expireTime)}}</text>
+      </view>
+    </view>
+    <view class="empty-tip" wx:if="{{records.length === 0 && !loading}}">
+      <text>暂无中奖记录</text>
+    </view>
+    <view class="loading-tip" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>

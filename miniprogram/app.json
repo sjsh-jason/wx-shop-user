@@ -18,7 +18,12 @@
     "pages/customer-list/customer-list",
     "pages/product-manage/product-manage",
     "pages/promotion-manage/promotion-manage",
-    "pages/points-product-manage/points-product-manage"
+    "pages/points-product-manage/points-product-manage",
+    "pages/draw-rule/draw-rule",
+    "pages/draw-records/draw-records",
+    "pages/draw-activity-setting/draw-activity-setting",
+    "pages/draw-chance-rule/draw-chance-rule",
+    "pages/draw-risk-config/draw-risk-config"
   ],
   "window": {
     "backgroundTextStyle": "light",

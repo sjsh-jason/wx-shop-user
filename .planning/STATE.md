@@ -1,9 +1,9 @@
 # 项目状态
 
 ## 当前状态
-- **当前阶段**: Phase 6 已完成
-- **当前里程碑**: 商品中心完善与 Bug 修复迭代
-- **最后更新**: 2026-04-16
+- **当前阶段**: Phase 7 进行中
+- **当前里程碑**: 抽奖功能优化与增强
+- **最后更新**: 2026-04-18
 
 ## 已完成
 - ✅ 需求调研与确认
@@ -56,12 +56,29 @@
   - 确认"每日签到"入口在个人中心保留
   - 确认拼团功能已记录到后续待实现需求
   - 后端编译验证通过
+- ✅ Phase 7 抽奖功能优化与增强（部分完成）
+  - 创建 Phase 7 规划文档（.planning/7/PLAN.md）
+  - 后端数据库迁移脚本（migration_draw_v2.sql）
+  - 后端新增实体类：DrawActivityConfig、DrawChance、DrawChanceRule、DrawChanceLog、DrawRiskConfig、DrawPrizeLimit
+  - 后端新增 Mapper：DrawActivityConfigMapper、DrawChanceMapper、DrawChanceRuleMapper、DrawChanceLogMapper、DrawRiskConfigMapper、DrawPrizeLimitMapper
+  - 后端新增服务：DrawChanceService、DrawActivityConfigService、DrawRiskConfigService
+  - 后端重构优化：LuckyDrawService、PrizeService
+  - 后端新增控制器：DrawActivityConfigController、DrawChanceController、DrawChanceRuleController、DrawRiskConfigController
+  - 后端更新控制器：LuckyDrawController、PrizeController
+  - 前端优化抽奖页面：lucky-draw（添加活动标题、倒计时、剩余次数、活动规则入口、我的奖品入口）
+  - 前端新增活动规则页：draw-rule
+  - 前端新增中奖记录页：draw-records
+  - 前端新增抽奖活动设置页：draw-activity-setting
+  - 前端新增抽奖机会规则页：draw-chance-rule
+  - 前端新增风控配置页：draw-risk-config
+  - 前端更新 app.json 注册新页面
+  - 前端更新个人中心 profile 页面添加抽奖管理入口
 
 ## 进行中
-- 无
+- Phase 7 抽奖功能优化与增强
 
 ## 待开始
-- 无（所有规划阶段已完成）
+- Phase 7 剩余：后端编译验证、端到端功能测试
 
 ## Phase 1 已交付文件
 
@@ -162,10 +179,59 @@
 - `miniprogram/pages/profile/*` - 个人中心（新增积分商品管理入口）
 - `miniprogram/app.json` - 注册新页面路由
 
+## Phase 7 已交付文件
+
+### 后端新增
+- `backend/src/main/resources/db/migration_draw_v2.sql` - 抽奖功能优化数据库迁移脚本
+- `backend/src/main/java/com/wxshop/member/entity/DrawActivityConfig.java` - 抽奖活动配置实体
+- `backend/src/main/java/com/wxshop/member/entity/DrawChance.java` - 抽奖机会实体
+- `backend/src/main/java/com/wxshop/member/entity/DrawChanceRule.java` - 抽奖机会规则实体
+- `backend/src/main/java/com/wxshop/member/entity/DrawChanceLog.java` - 抽奖机会明细实体
+- `backend/src/main/java/com/wxshop/member/entity/DrawRiskConfig.java` - 风控配置实体
+- `backend/src/main/java/com/wxshop/member/entity/DrawPrizeLimit.java` - 用户中奖限制实体
+- `backend/src/main/java/com/wxshop/member/mapper/DrawActivityConfigMapper.java`
+- `backend/src/main/java/com/wxshop/member/mapper/DrawChanceMapper.java`
+- `backend/src/main/java/com/wxshop/member/mapper/DrawChanceRuleMapper.java`
+- `backend/src/main/java/com/wxshop/member/mapper/DrawChanceLogMapper.java`
+- `backend/src/main/java/com/wxshop/member/mapper/DrawRiskConfigMapper.java`
+- `backend/src/main/java/com/wxshop/member/mapper/DrawPrizeLimitMapper.java`
+- `backend/src/main/java/com/wxshop/member/service/DrawChanceService.java` - 抽奖机会服务
+- `backend/src/main/java/com/wxshop/member/service/DrawActivityConfigService.java` - 活动配置服务
+- `backend/src/main/java/com/wxshop/member/service/DrawRiskConfigService.java` - 风控配置服务
+- `backend/src/main/java/com/wxshop/member/controller/DrawActivityConfigController.java` - 活动配置控制器
+- `backend/src/main/java/com/wxshop/member/controller/DrawChanceController.java` - 抽奖机会控制器
+- `backend/src/main/java/com/wxshop/member/controller/DrawChanceRuleController.java` - 机会规则控制器
+- `backend/src/main/java/com/wxshop/member/controller/DrawRiskConfigController.java` - 风控配置控制器
+
+### 后端修改
+- `backend/src/main/java/com/wxshop/member/entity/Prize.java` - 新增 validDays、description 字段
+- `backend/src/main/java/com/wxshop/member/entity/LuckyDraw.java` - 新增 expireTime、verifyStatus、verifyTime、qrCode 字段
+- `backend/src/main/java/com/wxshop/member/service/LuckyDrawService.java` - 重构优化，支持多次抽奖、风控逻辑
+- `backend/src/main/java/com/wxshop/member/service/PrizeService.java` - 新增 updatePrize 重载方法
+- `backend/src/main/java/com/wxshop/member/controller/LuckyDrawController.java` - 新增分页查询、核销接口
+- `backend/src/main/java/com/wxshop/member/controller/PrizeController.java` - 新增批量更新、全部查询接口
+
+### 前端修改
+- `miniprogram/pages/lucky-draw/lucky-draw.wxml` - 优化抽奖页面UI
+- `miniprogram/pages/lucky-draw/lucky-draw.js` - 优化抽奖逻辑，添加活动配置、倒计时、剩余次数
+
+### 前端新增
+- `miniprogram/pages/draw-rule/*` - 活动规则页面
+- `miniprogram/pages/draw-records/*` - 中奖记录页面
+- `miniprogram/pages/draw-activity-setting/*` - 抽奖活动设置页面
+- `miniprogram/pages/draw-chance-rule/*` - 抽奖机会规则页面
+- `miniprogram/pages/draw-risk-config/*` - 风控配置页面
+
+### 前端配置修改
+- `miniprogram/app.json` - 注册新页面路由
+- `miniprogram/pages/profile/profile.wxml` - 添加抽奖管理入口
+- `miniprogram/pages/profile/profile.js` - 添加跳转方法
+
 ## 风险与问题
 - 微信 appid 和 secret 需要在 application.yml 中配置
 - 需要先创建数据库并执行 schema.sql 初始化
-- Phase 6 涉及较多前端页面修复，需逐项验证交互流程
+- Phase 7 需执行 migration_draw_v2.sql 数据库迁移脚本
+- Phase 7 涉及较多后端和前端改动，需全面测试
 
 ## 项目完成总结
 
@@ -186,3 +252,6 @@
 
 **Phase 6 - Bug 修复与功能完善** ✅
 - 修复现有功能的 Bug，完善用户体验
+
+**Phase 7 - 抽奖功能优化与增强** 🔄
+- 根据新需求优化抽奖功能，添加抽奖机会管理、活动设置、风控配置

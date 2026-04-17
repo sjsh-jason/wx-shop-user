@@ -1,0 +1,26 @@
+<view class="page-container">
+  <view class="config-list">
+    <view wx:for="{{configs}}" wx:key="id" class="config-item">
+      <view class="config-header">
+        <text class="config-name">{{item.configName}}</text>
+      </view>
+      <view class="config-desc">{{item.description}}</view>
+      <view class="config-value">
+        <view wx:if="{{item.configType === 'boolean'}}" class="switch-wrapper">
+          <text class="switch-label">{{item.configValue === 'true' ? '已开启' : '已关闭'}}</text>
+          <switch checked="{{item.configValue === 'true'}}" bindchange="onSwitchChange" data-index="{{index}}" />
+        </view>
+        <view wx:if="{{item.configType === 'select'}}" class="select-wrapper">
+          <picker mode="selector" range="{{getOptions(item)}}" range-key="label" bindchange="onSelectChange" data-index="{{index}}">
+            <view class="picker">
+              {{getSelectedLabel(item)}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="button-section">
+    <button class="save-btn" bindtap="saveConfigs" loading="{{saving}}">保存设置</button>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+<view class="page-container">
+  <view class="rule-list">
+    <view wx:for="{{rules}}" wx:key="id" class="rule-item">
+      <view class="rule-header">
+        <text class="rule-name">{{getRuleName(item.chanceType)}}</text>
+        <switch checked="{{item.status === 1}}" bindchange="onStatusChange" data-index="{{index}}" />
+      </view>
+      <view class="rule-content" wx:if="{{item.status === 1}}">
+        <view class="rule-field" wx:if="{{item.chanceType === 'consume'}}">
+          <text class="field-label">满</text>
+          <input class="field-input" type="digit" value="{{item.minAmount}}" bindinput="onMinAmountInput" data-index="{{index}}" />
+          <text class="field-label">元送</text>
+          <input class="field-input" type="number" value="{{item.giveCount}}" bindinput="onGiveCountInput" data-index="{{index}}" />
+          <text class="field-label">次</text>
+        </view>
+        <view class="rule-field" wx:if="{{item.chanceType === 'consume'}}">
+          <text class="field-label">每日上限</text>
+          <input class="field-input" type="number" value="{{item.dailyLimit}}" bindinput="onDailyLimitInput" data-index="{{index}}" />
+          <text class="field-label">次</text>
+        </view>
+        <view class="rule-field" wx:if="{{item.chanceType !== 'consume'}}">
+          <text class="field-label">赠送</text>
+          <input class="field-input" type="number" value="{{item.giveCount}}" bindinput="onGiveCountInput" data-index="{{index}}" />
+          <text class="field-label">次</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="button-section">
+    <button class="save-btn" bindtap="saveRules" loading="{{saving}}">保存设置</button>
+  </view>
+</view>

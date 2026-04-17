@@ -110,6 +110,24 @@ Page({
     });
   },
 
+  goToDrawActivitySetting() {
+    wx.navigateTo({
+      url: '/pages/draw-activity-setting/draw-activity-setting'
+    });
+  },
+
+  goToDrawChanceRule() {
+    wx.navigateTo({
+      url: '/pages/draw-chance-rule/draw-chance-rule'
+    });
+  },
+
+  goToDrawRiskConfig() {
+    wx.navigateTo({
+      url: '/pages/draw-risk-config/draw-risk-config'
+    });
+  },
+
   logout() {
     wx.showModal({
       title: '提示',

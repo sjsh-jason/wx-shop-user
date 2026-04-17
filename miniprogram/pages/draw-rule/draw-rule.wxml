@@ -1,0 +1,33 @@
+<view class="page-container">
+  <view class="rule-content">
+    <rich-text nodes="{{ruleContent}}" wx:if="{{ruleContent}}"></rich-text>
+    <view class="default-rules" wx:else>
+      <view class="rule-item">
+        <text class="rule-title">活动时间</text>
+        <text class="rule-text">长期有效，具体结束时间以页面显示为准</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-title">参与条件</text>
+        <text class="rule-text">注册成为会员即可参与抽奖</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-title">抽奖机会获取</text>
+        <text class="rule-text">1. 每日签到赠送1次抽奖机会</text>
+        <text class="rule-text">2. 消费满额赠送抽奖机会</text>
+        <text class="rule-text">3. 新用户注册赠送1次抽奖机会</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-title">奖品说明</text>
+        <text class="rule-text">1. 积分奖励即时到账</text>
+        <text class="rule-text">2. 菜品和代金券需到店核销使用</text>
+        <text class="rule-text">3. 请在有效期内使用，逾期失效</text>
+      </view>
+      <view class="rule-item">
+        <text class="rule-title">其他说明</text>
+        <text class="rule-text">1. 同一用户123等奖限中1次</text>
+        <text class="rule-text">2. 恶意刷奖将取消中奖资格</text>
+        <text class="rule-text">3. 活动最终解释权归本店所有</text>
+      </view>
+    </view>
+  </view>
+</view>

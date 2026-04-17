@@ -1,9 +1,9 @@
 package com.wxshop.member.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.wxshop.member.entity.LuckyDraw;
-import com.wxshop.member.entity.Prize;
-import com.wxshop.member.entity.User;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wxshop.member.entity.*;
 import com.wxshop.member.mapper.LuckyDrawMapper;
 import com.wxshop.member.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -33,28 +33,30 @@ public class LuckyDrawService {
     @Resource
     private PointsLogService pointsLogService;
 
+    @Resource
+    private DrawChanceService drawChanceService;
+
+    @Resource
+    private DrawRiskConfigService drawRiskConfigService;
+
     private final Random random = new Random();
 
-    public List<LuckyDraw> getUserDraws(Long userId) {
+    public IPage<LuckyDraw> getUserDraws(Long userId, int page, int pageSize) {
         LambdaQueryWrapper<LuckyDraw> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(LuckyDraw::getUserId, userId)
-                .orderByDesc(LuckyDraw::getCreateTime)
-                .last("LIMIT 20");
-        return luckyDrawMapper.selectList(wrapper);
-    }
-
-    public boolean hasDrawnToday(Long userId) {
-        LocalDate today = LocalDate.now();
-        LambdaQueryWrapper<LuckyDraw> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(LuckyDraw::getUserId, userId)
-                .apply("DATE(create_time) = {0}", today.toString());
-        return luckyDrawMapper.selectCount(wrapper) > 0;
+                .orderByDesc(LuckyDraw::getCreateTime);
+        return luckyDrawMapper.selectPage(new Page<>(page, pageSize), wrapper);
     }
 
     @Transactional
     public LuckyDraw doDraw(Long userId) {
-        if (hasDrawnToday(userId)) {
-            throw new RuntimeException("今日已抽奖");
+        if (drawRiskConfigService.isAbnormalUser(userId)) {
+        throw new RuntimeException("检测到异常操作，暂时无法参与抽奖");
+    }
+
+        int remainingCount = drawChanceService.getRemainingCount(userId);
+        if (remainingCount <= 0) {
+            throw new RuntimeException("抽奖次数不足");
         }
 
         User user = userService.getUserById(userId);
@@ -67,7 +69,12 @@ public class LuckyDrawService {
             throw new RuntimeException("暂无奖品");
         }
 
-        Prize prize = drawPrize(prizes);
+        Prize prize = drawPrize(prizes, userId);
+        int prizeIndex = prizes.indexOf(prize);
+
+        if (!drawChanceService.consumeChance(userId)) {
+            throw new RuntimeException("抽奖次数消耗失败");
+        }
 
         LuckyDraw draw = new LuckyDraw();
         draw.setUserId(userId);
@@ -76,6 +83,12 @@ public class LuckyDrawService {
         draw.setPrizeType(prize.getType());
         draw.setPoints(prize.getPoints() != null ? prize.getPoints() : 0);
         draw.setStatus(0);
+
+        if (prize.getValidDays() != null && prize.getValidDays() > 0) {
+            draw.setExpireTime(LocalDateTime.now().plusDays(prize.getValidDays()));
+        }
+        draw.setVerifyStatus(0);
+
         luckyDrawMapper.insert(draw);
 
         if (prize.getType() == 1 && prize.getPoints() != null && prize.getPoints() > 0) {
@@ -90,28 +103,74 @@ public class LuckyDrawService {
             luckyDrawMapper.updateById(draw);
         }
 
+        if (prize.getType() == 2 || prize.getType() == 3) {
+            draw.setStatus(1);
+            draw.setVerifyStatus(0);
+            luckyDrawMapper.updateById(draw);
+        }
+
+        if (prize.getType() == 0) {
+            draw.setStatus(1);
+            luckyDrawMapper.updateById(draw);
+        }
+
+        if (prizeIndex < 3) {
+            drawRiskConfigService.recordTopPrizeWin(userId, prize.getId(), prizeIndex + 1);
+        }
+
         return draw;
     }
 
-    private Prize drawPrize(List<Prize> prizes) {
-        BigDecimal totalProbability = prizes.stream()
+    private Prize drawPrize(List<Prize> prizes, Long userId) {
+        List<Prize> availablePrizes = new java.util.ArrayList<>();
+        for (int i = 0; i < prizes.size(); i++) {
+            Prize prize = prizes.get(i);
+            if (i < 3 && drawRiskConfigService.hasWonTopPrize(userId, prize.getId(), i + 1)) {
+                continue;
+            }
+            availablePrizes.add(prize);
+        }
+
+        if (availablePrizes.isEmpty()) {
+            availablePrizes = prizes;
+        }
+
+        BigDecimal totalProbability = availablePrizes.stream()
                 .map(Prize::getProbability)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         double randomValue = random.nextDouble() * totalProbability.doubleValue();
         double current = 0;
 
-        for (Prize prize : prizes) {
+        for (Prize prize : availablePrizes) {
             current += prize.getProbability().doubleValue();
             if (randomValue <= current) {
                 return prize;
             }
         }
 
-        return prizes.get(prizes.size() - 1);
+        return availablePrizes.get(availablePrizes.size() - 1);
     }
 
     public List<User> getCustomerList() {
         return userService.getAllUsers();
+    }
+
+    public LuckyDraw getDrawById(Long id) {
+        return luckyDrawMapper.selectById(id);
+    }
+
+    @Transactional
+    public void verifyDraw(Long id) {
+        LuckyDraw draw = luckyDrawMapper.selectById(id);
+        if (draw == null) {
+            throw new RuntimeException("抽奖记录不存在");
+        }
+        if (draw.getVerifyStatus() != 0) {
+            throw new RuntimeException("该奖品已核销或已过期");
+        }
+        draw.setVerifyStatus(1);
+        draw.setVerifyTime(LocalDateTime.now());
+        luckyDrawMapper.updateById(draw);
     }
 }

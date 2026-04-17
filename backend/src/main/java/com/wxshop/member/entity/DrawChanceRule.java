@@ -6,31 +6,21 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("prize")
-public class Prize {
+@TableName("draw_chance_rule")
+public class DrawChanceRule {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private String name;
+    private String chanceType;
 
-    private String icon;
+    private String triggerCondition;
 
-    private Integer type;
+    private BigDecimal minAmount;
 
-    private Integer points;
+    private Integer giveCount;
 
-    private Long productId;
-
-    private BigDecimal couponValue;
-
-    private Integer validDays;
-
-    private String description;
-
-    private BigDecimal probability;
-
-    private Integer sortOrder;
+    private Integer dailyLimit;
 
     private Integer status;
 

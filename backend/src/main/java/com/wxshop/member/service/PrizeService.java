@@ -43,6 +43,10 @@ public class PrizeService {
         return prize;
     }
 
+    public void updatePrize(Prize prize) {
+        prizeMapper.updateById(prize);
+    }
+
     public void deletePrize(Long id) {
         prizeMapper.deleteById(id);
     }

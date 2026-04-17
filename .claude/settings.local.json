@@ -33,7 +33,10 @@
       "Skill(gsd-discuss-phase)",
       "Bash(mvn compile *)",
       "Bash(python3 -c ' *)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(gh pr *)",
+      "Bash(rtk *)",
+      "Skill(gsd-research-phase)"
     ]
   },
   "enableAllProjectMcpServers": true,
