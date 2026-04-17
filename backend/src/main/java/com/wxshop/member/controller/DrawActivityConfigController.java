@@ -16,6 +16,9 @@ public class DrawActivityConfigController {
     @Resource
     private DrawActivityConfigService drawActivityConfigService;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
     @GetMapping("/config")
     public Result<DrawActivityConfig> getConfig() {
         try {
@@ -33,7 +36,7 @@ public class DrawActivityConfigController {
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
             }
-            Long userId = JwtUtil.getUserIdFromToken(token);
+            Long userId = jwtUtil.getUserIdFromToken(token);
             if (userId == null) {
                 return Result.error("未登录");
             }

@@ -17,6 +17,9 @@ public class DrawChanceRuleController {
     @Resource
     private DrawChanceService drawChanceService;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
     @GetMapping
     public Result<List<DrawChanceRule>> getRules() {
         try {
@@ -34,7 +37,7 @@ public class DrawChanceRuleController {
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
             }
-            Long userId = JwtUtil.getUserIdFromToken(token);
+            Long userId = jwtUtil.getUserIdFromToken(token);
             if (userId == null) {
                 return Result.error("未登录");
             }

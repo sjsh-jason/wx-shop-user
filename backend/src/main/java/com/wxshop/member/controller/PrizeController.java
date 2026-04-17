@@ -17,6 +17,9 @@ public class PrizeController {
     @Resource
     private PrizeService prizeService;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
     @GetMapping
     public Result<List<Prize>> getPrizes() {
         try {
@@ -34,7 +37,7 @@ public class PrizeController {
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
             }
-            Long userId = JwtUtil.getUserIdFromToken(token);
+            Long userId = jwtUtil.getUserIdFromToken(token);
             if (userId == null) {
                 return Result.error("未登录");
             }
@@ -66,7 +69,7 @@ public class PrizeController {
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
             }
-            Long userId = JwtUtil.getUserIdFromToken(token);
+            Long userId = jwtUtil.getUserIdFromToken(token);
             if (userId == null) {
                 return Result.error("未登录");
             }

@@ -18,6 +18,9 @@ public class DrawChanceController {
     @Resource
     private DrawChanceService drawChanceService;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
     @GetMapping("/status")
     public Result<Map<String, Object>> getChanceStatus(HttpServletRequest request) {
         try {
@@ -25,7 +28,7 @@ public class DrawChanceController {
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
             }
-            Long userId = JwtUtil.getUserIdFromToken(token);
+            Long userId = jwtUtil.getUserIdFromToken(token);
             if (userId == null) {
                 return Result.error("未登录");
             }
