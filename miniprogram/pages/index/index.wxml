@@ -62,7 +62,7 @@
       <view class="nav-icon nav-pink">
         <icon type="waiting" size="24"></icon>
       </view>
-      <text class="nav-text">待领取</text>
+      <text class="nav-text">待取美食</text>
     </view>
   </view>
 

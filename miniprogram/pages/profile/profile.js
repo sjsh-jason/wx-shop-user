@@ -12,7 +12,7 @@ Page({
   },
 
   onShow() {
-    this.loadUserInfo();
+    this.fetchUserInfo();
     this.checkMerchant();
   },
 
@@ -21,6 +21,18 @@ Page({
     if (userInfo) {
       this.setData({ userInfo });
     }
+  },
+
+  fetchUserInfo() {
+    app.request({
+      url: '/api/user/info',
+      method: 'GET'
+    }).then(res => {
+      app.setUserInfo(res);
+      this.setData({ userInfo: res });
+    }).catch(err => {
+      console.error('获取用户信息失败:', err);
+    });
   },
 
   checkMerchant() {

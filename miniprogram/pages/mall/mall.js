@@ -119,7 +119,7 @@ Page({
       wx.hideLoading();
       wx.showModal({
         title: '兑换成功',
-        content: '您可以在「我的-待领取」中查看并出示二维码进行核销',
+        content: '您可以在「我的-待取美食」中查看并出示二维码进行核销',
         showCancel: false,
         success: () => {
           this.loadProducts();

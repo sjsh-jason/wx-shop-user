@@ -50,7 +50,7 @@ Page({
 
   getStatusText(status) {
     const map = {
-      0: '待领取',
+      0: '待取美食',
       1: '已领取',
       2: '已取消'
     };

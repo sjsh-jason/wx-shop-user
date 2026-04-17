@@ -6,6 +6,7 @@ import com.wxshop.member.entity.PointsRule;
 import com.wxshop.member.entity.User;
 import com.wxshop.member.mapper.CheckInMapper;
 import com.wxshop.member.mapper.PointsRuleMapper;
+import com.wxshop.member.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public class CheckInService {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Resource
     private PointsLogService pointsLogService;
@@ -89,7 +93,7 @@ public class CheckInService {
         // 增加用户积分
         user.setPoints(user.getPoints() + totalPoints);
         user.setTotalPoints(user.getTotalPoints() + totalPoints);
-        userService.updateUser(user.getId(), user.getNickname(), user.getAvatar());
+        userMapper.updateById(user);
 
         // 记录积分明细
         String remark = "每日签到";

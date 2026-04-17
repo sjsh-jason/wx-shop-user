@@ -10,7 +10,7 @@ Page({
   },
 
   onShow() {
-    this.loadUserInfo();
+    this.fetchUserInfo();
   },
 
   loadUserInfo() {

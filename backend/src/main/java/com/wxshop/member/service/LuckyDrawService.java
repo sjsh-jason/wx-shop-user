@@ -5,6 +5,7 @@ import com.wxshop.member.entity.LuckyDraw;
 import com.wxshop.member.entity.Prize;
 import com.wxshop.member.entity.User;
 import com.wxshop.member.mapper.LuckyDrawMapper;
+import com.wxshop.member.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public class LuckyDrawService {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Resource
     private PointsLogService pointsLogService;
@@ -77,7 +81,7 @@ public class LuckyDrawService {
         if (prize.getType() == 1 && prize.getPoints() != null && prize.getPoints() > 0) {
             user.setPoints(user.getPoints() + prize.getPoints());
             user.setTotalPoints(user.getTotalPoints() + prize.getPoints());
-            userService.updateUser(user.getId(), user.getNickname(), user.getAvatar());
+            userMapper.updateById(user);
 
             pointsLogService.addLog(userId, 4, prize.getPoints(), user.getPoints(),
                     "lucky_draw", draw.getId(), "幸运抽奖获得积分");

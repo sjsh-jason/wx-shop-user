@@ -5,7 +5,7 @@ Page({
     currentTab: 0,
     tabs: [
       { name: '全部', status: null },
-      { name: '待领取', status: 0 },
+      { name: '待取美食', status: 0 },
       { name: '已领取', status: 1 }
     ],
     list: [],
@@ -61,7 +61,7 @@ Page({
 
   getStatusText(status) {
     const map = {
-      0: '待领取',
+      0: '待取美食',
       1: '已领取',
       2: '已取消'
     };

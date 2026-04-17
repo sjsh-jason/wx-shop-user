@@ -5,6 +5,7 @@ import com.wxshop.member.entity.ExchangeRecord;
 import com.wxshop.member.entity.PointsProduct;
 import com.wxshop.member.entity.User;
 import com.wxshop.member.mapper.ExchangeRecordMapper;
+import com.wxshop.member.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ public class ExchangeRecordService {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Resource
     private PointsLogService pointsLogService;
@@ -54,7 +58,7 @@ public class ExchangeRecordService {
 
         // 扣减用户积分
         user.setPoints(user.getPoints() - product.getPoints());
-        userService.updateUser(user.getId(), user.getNickname(), user.getAvatar());
+        userMapper.updateById(user);
 
         // 创建兑换记录
         ExchangeRecord record = new ExchangeRecord();
