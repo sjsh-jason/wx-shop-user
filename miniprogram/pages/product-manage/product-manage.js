@@ -84,6 +84,10 @@ Page({
     return map[type] || type;
   },
 
+  normalizeName(name) {
+    return name.toLowerCase().replace(/[（）]/g, (c) => c === '（' ? '(' : ')');
+  },
+
   showAddModal() {
     this.setData({
       showModal: true,
@@ -221,6 +225,19 @@ Page({
     if (!formData.name || !formData.name.trim()) {
       wx.showToast({
         title: '请输入商品名称',
+        icon: 'none'
+      });
+      return;
+    }
+
+    const normalizedInput = this.normalizeName(formData.name.trim());
+    const duplicate = this.data.products.find(p => {
+      if (editingId && p.id === editingId) return false;
+      return this.normalizeName(p.name) === normalizedInput;
+    });
+    if (duplicate) {
+      wx.showToast({
+        title: '商品名称已存在',
         icon: 'none'
       });
       return;
