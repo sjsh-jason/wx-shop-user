@@ -115,8 +115,8 @@
 }
 
 .qrcode-box {
-  width: 400rpx;
-  height: 400rpx;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
   background: white;
   border: 2rpx solid #e8e8e8;
@@ -126,18 +126,9 @@
   justify-content: center;
 }
 
-.qrcode-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.qrcode-text {
-  font-size: 20rpx;
-  color: #999;
-  margin-top: 16rpx;
-  word-break: break-all;
-  padding: 0 20rpx;
+.qrcode-canvas {
+  width: 200px;
+  height: 200px;
 }
 
 .qrcode-hint {

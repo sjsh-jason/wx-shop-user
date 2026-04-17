@@ -44,7 +44,8 @@ Page({
         return {
           ...item,
           statusText: this.getStatusText(item.status),
-          timeText: this.formatTime(item.createTime)
+          timeText: this.formatTime(item.createTime),
+          expireTimeText: item.status === 0 ? '2025-12-31' : ''
         };
       });
       this.setData({
@@ -70,7 +71,8 @@ Page({
 
   formatTime(timeStr) {
     if (!timeStr) return '';
-    const date = new Date(timeStr.replace(/-/g, '/'));
+    const date = new Date(timeStr.replace('T', ' ').replace(/-/g, '/'));
+    if (isNaN(date.getTime())) return '';
     const y = date.getFullYear();
     const m = (date.getMonth() + 1).toString().padStart(2, '0');
     const d = date.getDate().toString().padStart(2, '0');

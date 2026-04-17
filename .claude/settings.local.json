@@ -31,7 +31,9 @@
       "Skill(gsd-help)",
       "Skill(gsd-add-phase)",
       "Skill(gsd-discuss-phase)",
-      "Bash(mvn compile *)"
+      "Bash(mvn compile *)",
+      "Bash(python3 -c ' *)",
+      "Bash(node *)"
     ]
   },
   "enableAllProjectMcpServers": true,

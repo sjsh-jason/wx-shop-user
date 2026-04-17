@@ -33,7 +33,10 @@
             </text>
             <text class="time">{{item.timeText}}</text>
           </view>
-          <view class="status status-{{item.status}}">{{item.statusText}}</view>
+          <view class="status-row">
+            <view class="status status-{{item.status}}">{{item.statusText}}</view>
+            <text class="expire-time" wx:if="{{item.status === 0}}">失效时间：{{item.expireTimeText}}</text>
+          </view>
         </view>
         <icon type="info" size="16" color="#ccc" class="arrow"></icon>
       </view>

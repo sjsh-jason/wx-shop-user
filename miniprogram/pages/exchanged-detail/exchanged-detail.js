@@ -1,4 +1,5 @@
 const app = getApp();
+const QRCode = require('../../utils/qrcode.js');
 
 Page({
   data: {
@@ -37,6 +38,9 @@ Page({
         createTimeText: this.formatTime(res.createTime),
         verifyTimeText: res.verifyTime ? this.formatTime(res.verifyTime) : ''
       });
+      if (res.status === 0 && res.qrCode) {
+        wx.nextTick(() => this.drawQrCode(res.qrCode));
+      }
     }).catch(() => {
       this.setData({
         loading: false
@@ -59,12 +63,18 @@ Page({
 
   formatTime(timeStr) {
     if (!timeStr) return '';
-    const date = new Date(timeStr.replace(/-/g, '/'));
+    const date = new Date(timeStr.replace('T', ' ').replace(/-/g, '/'));
+    if (isNaN(date.getTime())) return '';
     const y = date.getFullYear();
     const m = (date.getMonth() + 1).toString().padStart(2, '0');
     const d = date.getDate().toString().padStart(2, '0');
     const h = date.getHours().toString().padStart(2, '0');
     const min = date.getMinutes().toString().padStart(2, '0');
     return `${y}-${m}-${d} ${h}:${min}`;
+  },
+
+  drawQrCode(text) {
+    const ctx = wx.createCanvasContext('qrcode');
+    QRCode.drawToCanvas(ctx, text, { width: 200 });
   }
 });
