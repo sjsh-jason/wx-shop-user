@@ -54,7 +54,7 @@
 
   <!-- 添加/编辑积分商品弹窗 -->
   <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
-    <view class="modal-content" catchtap="">
+    <view class="modal-content" catchtap="noop">
       <view class="modal-header">
         <text class="modal-title">{{editingId ? '编辑积分商品' : '添加积分商品'}}</text>
         <icon type="cancel" size="20" color="#999" bindtap="hideModal"></icon>
@@ -71,6 +71,21 @@
         <view class="form-item">
           <text class="form-label">商品名称</text>
           <input class="form-input" placeholder="请输入商品名称" value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">商品图片</text>
+          <view class="image-uploader">
+            <view class="upload-preview" wx:if="{{formData.image}}" bindtap="previewImage">
+              <image class="preview-image" src="{{formData.image}}" mode="aspectFill"></image>
+              <view class="delete-btn" catchtap="deleteImage">
+                <icon type="cancel" size="16" color="#ffffff"></icon>
+              </view>
+            </view>
+            <view class="upload-btn" wx:else bindtap="chooseImage">
+              <icon type="waiting" size="32" color="#ddd"></icon>
+              <text class="upload-text">点击上传图片</text>
+            </view>
+          </view>
         </view>
         <view class="form-item">
           <text class="form-label">所需积分</text>
@@ -90,7 +105,7 @@
 
   <!-- 商品选择器 -->
   <view class="modal" wx:if="{{showProductPicker}}" catchtap="hideProductPicker">
-    <view class="picker-content" catchtap="">
+    <view class="picker-content" catchtap="noop">
       <view class="picker-header">
         <text class="picker-title">选择商品</text>
         <icon type="cancel" size="20" color="#999" bindtap="hideProductPicker"></icon>

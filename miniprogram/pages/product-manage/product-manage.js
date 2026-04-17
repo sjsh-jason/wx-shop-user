@@ -23,7 +23,8 @@ Page({
       type: 'coupon',
       price: '',
       stock: '',
-      description: ''
+      description: '',
+      image: ''
     }
   },
 
@@ -41,6 +42,14 @@ Page({
     this.loadProducts();
   },
 
+  getFullImageUrl(url) {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    return app.globalData.baseUrl + url;
+  },
+
   loadProducts() {
     this.setData({ loading: true });
     const tab = this.data.currentTab;
@@ -50,8 +59,12 @@ Page({
       url,
       method: 'GET'
     }).then((res) => {
+      const products = (res || []).map(item => ({
+        ...item,
+        image: this.getFullImageUrl(item.image)
+      }));
       this.setData({
-        products: res || [],
+        products,
         loading: false
       });
     }).catch(() => {
@@ -80,7 +93,8 @@ Page({
         type: 'coupon',
         price: '',
         stock: '',
-        description: ''
+        description: '',
+        image: ''
       }
     });
   },
@@ -97,7 +111,8 @@ Page({
           type: product.type || 'coupon',
           price: product.price || '',
           stock: product.stock || '',
-          description: product.description || ''
+          description: product.description || '',
+          image: product.image || ''
         }
       });
     }
@@ -126,6 +141,80 @@ Page({
     });
   },
 
+  chooseImage() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFilePaths[0];
+        this.uploadImage(tempFilePath);
+      }
+    });
+  },
+
+  uploadImage(filePath) {
+    wx.showLoading({ title: '上传中...' });
+
+    wx.uploadFile({
+      url: app.globalData.baseUrl + '/api/upload',
+      filePath: filePath,
+      name: 'file',
+      header: {
+        'Authorization': 'Bearer ' + (wx.getStorageSync('token') || '')
+      },
+      success: (res) => {
+        wx.hideLoading();
+        try {
+          const data = JSON.parse(res.data);
+          if (data.code === 200) {
+            const imageUrl = this.getFullImageUrl(data.data.url);
+            this.setData({
+              'formData.image': imageUrl
+            });
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success'
+            });
+          } else {
+            wx.showToast({
+              title: data.message || '上传失败',
+              icon: 'none'
+            });
+          }
+        } catch (e) {
+          wx.showToast({
+            title: '上传失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: (err) => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '上传失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  previewImage() {
+    const image = this.data.formData.image;
+    if (image) {
+      wx.previewImage({
+        urls: [image],
+        current: image
+      });
+    }
+  },
+
+  deleteImage() {
+    this.setData({
+      'formData.image': ''
+    });
+  },
+
   saveProduct() {
     const { formData, editingId } = this.data;
 
@@ -139,12 +228,18 @@ Page({
 
     wx.showLoading({ title: '保存中...' });
 
+    let imageUrl = formData.image;
+    if (imageUrl && imageUrl.startsWith(app.globalData.baseUrl)) {
+      imageUrl = imageUrl.substring(app.globalData.baseUrl.length);
+    }
+
     const data = {
       name: formData.name.trim(),
       type: formData.type,
       price: formData.price ? parseFloat(formData.price) : null,
       stock: formData.stock ? parseInt(formData.stock) : 0,
-      description: formData.description
+      description: formData.description,
+      image: imageUrl
     };
 
     const request = editingId

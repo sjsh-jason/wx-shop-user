@@ -71,6 +71,14 @@ Page({
     return map[type] || type;
   },
 
+  getFullImageUrl(url) {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    return app.globalData.baseUrl + url;
+  },
+
   showAddModal() {
     this.setData({
       showModal: true,
@@ -101,13 +109,17 @@ Page({
         formData: {
           productId: product.productId || null,
           name: product.name || '',
-          image: product.image || '',
+          image: this.getFullImageUrl(product.image),
           category: product.category || '',
           points: product.points || '',
           stock: product.stock || ''
         }
       });
     }
+  },
+
+  noop() {
+    // 阻止事件冒泡，避免点击弹窗内容时关闭弹窗
   },
 
   hideModal() {
@@ -128,7 +140,7 @@ Page({
       selectedProduct: product,
       'formData.productId': product.id,
       'formData.name': product.name,
-      'formData.image': product.image || '',
+      'formData.image': this.getFullImageUrl(product.image),
       'formData.category': product.type || '',
       showProductPicker: false
     });
@@ -139,6 +151,73 @@ Page({
     const value = e.detail.value;
     this.setData({
       [`formData.${field}`]: value
+    });
+  },
+
+  chooseImage() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFilePaths[0];
+        this.uploadImage(tempFilePath);
+      }
+    });
+  },
+
+  uploadImage(filePath) {
+    wx.showLoading({ title: '上传中...' });
+
+    wx.uploadFile({
+      url: app.globalData.baseUrl + '/api/upload',
+      filePath: filePath,
+      name: 'file',
+      header: {
+        'Authorization': 'Bearer ' + (wx.getStorageSync('token') || '')
+      },
+      success: (res) => {
+        wx.hideLoading();
+        const data = JSON.parse(res.data);
+        if (data.code === 200) {
+          this.setData({
+            'formData.image': data.data.url
+          });
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success'
+          });
+        } else {
+          wx.showToast({
+            title: data.message || '上传失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: () => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '上传失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  previewImage() {
+    const image = this.getFullImageUrl(this.data.formData.image);
+    if (image) {
+      wx.previewImage({
+        urls: [image],
+        current: image
+      });
+    }
+  },
+
+  deleteImage(e) {
+    e.stopPropagation();
+    this.setData({
+      'formData.image': ''
     });
   },
 
