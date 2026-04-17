@@ -130,7 +130,7 @@
           <view class="menu-icon icon-orange">
             <icon type="waiting" size="20"></icon>
           </view>
-          <text class="menu-text">积分兑换记录</text>
+          <text class="menu-text">我的消费</text>
         </view>
         <icon type="info" size="16" color="#CCCCCC"></icon>
       </view>
@@ -141,36 +141,6 @@
             <icon type="waiting" size="20"></icon>
           </view>
           <text class="menu-text">积分明细</text>
-        </view>
-        <icon type="info" size="16" color="#CCCCCC"></icon>
-      </view>
-
-      <view class="menu-item">
-        <view class="menu-left">
-          <view class="menu-icon icon-pink">
-            <icon type="waiting" size="20"></icon>
-          </view>
-          <text class="menu-text">我的拼团记录</text>
-        </view>
-        <icon type="info" size="16" color="#CCCCCC"></icon>
-      </view>
-
-      <view class="menu-item">
-        <view class="menu-left">
-          <view class="menu-icon icon-blue">
-            <icon type="waiting" size="20"></icon>
-          </view>
-          <text class="menu-text">我的评价</text>
-        </view>
-        <icon type="info" size="16" color="#CCCCCC"></icon>
-      </view>
-
-      <view class="menu-item">
-        <view class="menu-left">
-          <view class="menu-icon icon-green">
-            <icon type="waiting" size="20"></icon>
-          </view>
-          <text class="menu-text">收货地址</text>
         </view>
         <icon type="info" size="16" color="#CCCCCC"></icon>
       </view>

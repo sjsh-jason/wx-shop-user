@@ -69,7 +69,7 @@ Page({
   },
 
   goToExchanged() {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/exchanged/exchanged'
     });
   },

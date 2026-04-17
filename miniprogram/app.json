@@ -46,8 +46,8 @@
         "selectedIconPath": "images/tab-gift-active.png"
       },
       {
-        "pagePath": "pages/coupons/coupons",
-        "text": "卡券",
+        "pagePath": "pages/exchanged/exchanged",
+        "text": "待取",
         "iconPath": "images/tab-ticket.png",
         "selectedIconPath": "images/tab-ticket-active.png"
       },
