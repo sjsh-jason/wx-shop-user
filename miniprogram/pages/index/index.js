@@ -40,7 +40,7 @@ Page({
     console.log('跳转 URL:', url);
     if (url) {
       // 检查是否是 TabBar 页面
-      const tabBarPages = ['/pages/index/index', '/pages/mall/mall', '/pages/coupons/coupons', '/pages/profile/profile'];
+      const tabBarPages = ['/pages/index/index', '/pages/mall/mall', '/pages/exchanged/exchanged', '/pages/profile/profile'];
       if (tabBarPages.includes(url)) {
         wx.switchTab({
           url,

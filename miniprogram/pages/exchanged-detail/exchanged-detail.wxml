@@ -32,7 +32,7 @@
   <view class="qrcode-section" wx:if="{{detail.status === 0}}">
     <view class="qrcode-tip">请向商家出示此二维码</view>
     <view class="qrcode-box">
-      <canvas canvas-id="qrcode" class="qrcode-canvas" style="width: 200px; height: 200px;"></canvas>
+      <canvas canvas-id="qrcode" class="qrcode-canvas" style="width: 200px; height: 200px;" width="200" height="200"></canvas>
     </view>
     <view class="qrcode-hint">核销码：{{detail.qrCode}}</view>
   </view>

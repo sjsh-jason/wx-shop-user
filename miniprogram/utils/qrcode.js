@@ -512,9 +512,11 @@ const QRCode = (function () {
       const qrcode = this.generate(text);
       const count = qrcode.getModuleCount();
       const opts = Object.assign({ width: 200, margin: 10 }, options);
-      const cellSize = (opts.width - opts.margin * 2) / count;
+      // cellSize 取整数，避免小数坐标导致模块间隙
+      const cellSize = Math.floor((opts.width - opts.margin * 2) / count);
+      const drawSize = cellSize * count + opts.margin * 2;
       ctx.setFillStyle('#ffffff');
-      ctx.fillRect(0, 0, opts.width, opts.width);
+      ctx.fillRect(0, 0, drawSize, drawSize);
       ctx.setFillStyle('#000000');
       for (let row = 0; row < count; row++) {
         for (let col = 0; col < count; col++) {
