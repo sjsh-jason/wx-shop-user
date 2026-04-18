@@ -25,6 +25,9 @@ public class UserService {
     @Resource
     private JwtUtil jwtUtil;
 
+    @Resource
+    private DrawChanceService drawChanceService;
+
     @Transactional
     public LoginResponse wechatLogin(String code) {
         Map<String, String> wxResult = wxUtil.code2Session(code);
@@ -51,6 +54,8 @@ public class UserService {
             user.setTotalPoints(0);
             userMapper.insert(user);
             isNewUser = true;
+            // 新用户注册赠送抽奖机会
+            drawChanceService.handleNewUser(user.getId());
         }
 
         String token = jwtUtil.generateToken(user.getId());

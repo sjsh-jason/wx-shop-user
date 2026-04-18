@@ -17,7 +17,16 @@ Page({
       method: 'GET'
     }).then((res) => {
       if (res && res.length > 0) {
-        this.setData({ rules: res });
+        const names = {
+          'consume': '消费得机会',
+          'check_in': '每日签到',
+          'new_user': '新用户专享'
+        };
+        const rules = res.map(item => ({
+          ...item,
+          ruleName: names[item.chanceType] || item.chanceType
+        }));
+        this.setData({ rules });
       }
       wx.hideLoading();
     }).catch(() => {
@@ -25,14 +34,6 @@ Page({
     });
   },
 
-  getRuleName(type) {
-    const names = {
-      'consume': '消费得机会',
-      'check_in': '每日签到',
-      'new_user': '新用户专享'
-    };
-    return names[type] || type;
-  },
 
   onStatusChange(e) {
     const index = e.currentTarget.dataset.index;

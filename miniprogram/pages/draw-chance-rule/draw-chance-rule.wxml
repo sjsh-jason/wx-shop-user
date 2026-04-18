@@ -2,7 +2,7 @@
   <view class="rule-list">
     <view wx:for="{{rules}}" wx:key="id" class="rule-item">
       <view class="rule-header">
-        <text class="rule-name">{{getRuleName(item.chanceType)}}</text>
+        <text class="rule-name">{{item.ruleName}}</text>
         <switch checked="{{item.status === 1}}" bindchange="onStatusChange" data-index="{{index}}" />
       </view>
       <view class="rule-content" wx:if="{{item.status === 1}}">

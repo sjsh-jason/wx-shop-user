@@ -33,6 +33,9 @@ public class CheckInService {
     @Resource
     private PointsLogService pointsLogService;
 
+    @Resource
+    private DrawChanceService drawChanceService;
+
     public CheckIn getTodayCheckIn(Long userId) {
         LambdaQueryWrapper<CheckIn> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(CheckIn::getUserId, userId)
@@ -102,6 +105,9 @@ public class CheckInService {
         }
         pointsLogService.addLog(userId, 1, totalPoints, user.getPoints(),
                 "check_in", checkIn.getId(), remark);
+
+        // 赠送签到抽奖机会
+        drawChanceService.handleCheckIn(userId);
 
         return checkIn;
     }
