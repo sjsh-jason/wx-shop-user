@@ -1,40 +1,52 @@
 <view class="page-container">
   <view class="header-section">
-    <text class="title">{{activityTitle}}</text>
+    <text class="title">幸运大抽奖</text>
     <text class="countdown" wx:if="{{remainingTime > 0}}">距结束: {{formatCountdown(remainingTime)}}</text>
+    <text class="countdown" wx:else>活动进行中</text>
   </view>
 
   <view class="lottery-box">
+    <view class="pointer-wrap">
+      <view class="pointer"></view>
+    </view>
+
     <view class="lottery-grid">
-      <view
-        wx:for="{{prizes}}"
-        wx:key="id"
-        class="grid-item {{currentIndex === index ? 'active' : ''}}"
-      >
-        <view class="prize-icon">
-          <text class="icon-text">{{item.iconText}}</text>
+      <block wx:for="{{gridPositions}}" wx:key="index">
+        <!-- 中心按钮 -->
+        <view wx:if="{{item.isCenter}}" class="center-cell">
+          <view class="center-btn {{isRunning || remainingCount <= 0 ? 'disabled' : ''}}" bindtap="startDraw">
+            <view class="center-logo">
+              <text class="logo-text">抽奖</text>
+            </view>
+            <text class="btn-text">{{isRunning ? '进行中' : '开始抽奖'}}</text>
+          </view>
         </view>
-        <text class="prize-name">{{item.name}}</text>
+
+        <!-- 奖品格子 -->
+        <view wx:else class="grid-item {{currentIndex === index ? 'active' : ''}}">
+          <view class="prize-icon">
+            <text class="icon-text">{{prizes[item.prizeIndex].iconText}}</text>
+          </view>
+          <text class="prize-name">{{prizes[item.prizeIndex].name}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="bottom-section">
+    <view class="chance-bar">
+      <text class="chance-text">今日可抽 {{remainingCount}} 次</text>
+    </view>
+
+    <view class="action-buttons">
+      <view class="action-btn" bindtap="goToRule">
+        <text class="action-icon">📋</text>
+        <text class="action-text">活动规则</text>
       </view>
-    </view>
-
-    <view class="start-btn {{isRunning || remainingCount <= 0 ? 'disabled' : ''}}" bindtap="startDraw">
-      {{remainingCount <= 0 ? '去获取次数' : (isRunning ? '抽奖中...' : '开始抽奖')}}
-    </view>
-  </view>
-
-  <view class="chance-section">
-    <text class="chance-text">今日可抽: {{remainingCount}} 次</text>
-  </view>
-
-  <view class="action-buttons">
-    <view class="action-btn" bindtap="goToRule">
-      <text class="action-icon">📋</text>
-      <text class="action-text">活动规则</text>
-    </view>
-    <view class="action-btn" bindtap="goToRecords">
-      <text class="action-icon">🎁</text>
-      <text class="action-text">我的奖品</text>
+      <view class="action-btn" bindtap="goToRecords">
+        <text class="action-icon">🎁</text>
+        <text class="action-text">我的中奖记录</text>
+      </view>
     </view>
   </view>
 </view>
